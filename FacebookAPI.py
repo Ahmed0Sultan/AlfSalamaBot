@@ -32,7 +32,7 @@ def send_message(token, user_id, text):
                       params={"access_token": token},
                       data=json.dumps({
                           "recipient": {"id": user_id},
-                          "message": {"text": text.decode('unicode_escape')}
+                          "message": {"text": text.decode('utf-8')}
                       }),
                       headers={'Content-type': 'application/json'})
     if r.status_code != requests.codes.ok:
@@ -102,7 +102,7 @@ def send_url(token, user_id, text, title, url):
         print r.text
 
 
-def send_intro_screenshots(app, token, user_id):
+def send_intro_screenshots(token, user_id):
     chat_speak = {
         "title": 'You can both chat and speak to me',
         "image_url": url_for('static', filename="assets/img/intro/1-voice-and-text.jpg", _external=True),
@@ -155,23 +155,78 @@ def send_intro_screenshots(app, token, user_id):
         print r.text
 
 
-def send_quick_replies(token, user_id, intro):
+def send_body_quick_replies(token, user_id, intro):
+    body_key = 'body_part_'
     quickRepliesOptions = [
         {"content_type": "text",
-         "title": "Aguamenti",
-         "payload": 'spell-aguamenti'
+         "title": "1",
+         "payload": body_key + '1'
          },
         {"content_type": "text",
-         "title": "Expecto Patronum",
-         "payload": 'spell-expecto-patronum'
+         "title": "2",
+         "payload": body_key + '2'
          },
         {"content_type": "text",
-         "title": "Avada Kedavra",
-         "payload": 'spell-avada-kedavra'
+         "title": "3",
+         "payload": body_key + '3'
          },
         {"content_type": "text",
-         "title": "Alohomora",
-         "payload": 'spell-alohomora'
+         "title": "4",
+         "payload": body_key + '4'
+         },
+        {"content_type": "text",
+         "title": "5",
+         "payload": body_key + '5'
+         },
+        {"content_type": "text",
+         "title": "6",
+         "payload": body_key + '6'
+         },
+        {"content_type": "text",
+         "title": "7",
+         "payload": body_key + '7'
+         },
+        {"content_type": "text",
+         "title": "8",
+         "payload": body_key + '8'
+         },
+        {"content_type": "text",
+         "title": "9",
+         "payload": body_key + '9'
+         },
+        {"content_type": "text",
+         "title": "10",
+         "payload": body_key + '10'
+         }
+    ]
+    data = json.dumps({
+        "recipient": {"id": user_id},
+        "message": {
+            "text": intro,
+            "quick_replies": quickRepliesOptions
+        }
+    })
+    data = data.encode('utf-8')
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=data,
+                      headers={'Content-type': 'application/json'})
+
+    if r.status_code != requests.codes.ok:
+        print r.text
+
+
+def send_question_answer_quick_replies(token, user_id, intro):
+    key = 'Q&A_'
+
+    quickRepliesOptions = [
+        {"content_type": "text",
+         "title": "yes",
+         "payload": key + '1'
+         },
+        {"content_type": "text",
+         "title": "no",
+         "payload": key + '0'
          }
     ]
     data = json.dumps({
