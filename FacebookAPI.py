@@ -216,17 +216,17 @@ def send_body_quick_replies(token, user_id, intro):
         print r.text
 
 
-def send_question_answer_quick_replies(token, user_id, intro):
-    key = 'Q&A_'
+def send_question_answer_quick_replies(token, user_id, question_id, intro):
+    key = '_Q&A_'
 
     quickRepliesOptions = [
         {"content_type": "text",
          "title": "yes",
-         "payload": key + '1'
+         "payload": str(question_id) + key + '1'
          },
         {"content_type": "text",
          "title": "no",
-         "payload": key + '0'
+         "payload": str(question_id) + key + '0'
          }
     ]
     data = json.dumps({
