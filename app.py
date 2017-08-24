@@ -27,27 +27,40 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     username = db.Column(db.String(), unique=True)
-    password = db.Column(db.String())
     email = db.Column(db.String(), unique=True)
+    password = db.Column(db.String())
+    phone = db.Column(db.String(), unique=True)
+    age = db.Column(db.Integer)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
-    def __init__(self, name, username, password, email):
+    health_records = relation('HealthRecord')
+
+    def __init__(self, name, username, password, email, phone, age):
         self.name = name
         self.username = username
         self.password = password
         self.email = email
+        self.phone = phone
+        self.age = age
 
     def __repr__(self):
         return '<User %r>' % self.username
 
 
 class Question(db.Model):
+    ROUTE_NO = 0
+    ROUTE_YES = 1
+    ROUTE_SYMPTOM = 2  # will use to indicate that this record blongs to symptoms not question
+
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.TEXT, nullable=false)
-    route = db.Column(db.Boolean,  default=0)
-    parent_id = db.Column(db.Integer, db.ForeignKey('question.id'))
-    parent = relation('Question', remote_side=[id])
-    childs = relation('Question', remote_side=[parent_id])
+    route = db.Column(db.Integer, default=0)
+    parent_id = db.Column(db.Integer)
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    # parent = relation('Question', backref='Question', lazy='dynamic', primaryjoin="Question.id == Question.parent_id")
+
+    # childs = relation('Question', backref='Question', remote_side=[parent_id])
 
     def __init__(self, question, route, parent_id):
         self.question = question
@@ -55,12 +68,49 @@ class Question(db.Model):
         self.parent_id = parent_id
 
 
+# body parts
+class Part(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), unique=True)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    symptoms = relation('Symptom')
+
+    def __init__(self, name):
+        self.name = name
+
+
+# الاعراض الخاصه بالعضو
+class Symptom(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), unique=True)
+    part_id = db.Column(db.Integer, db.ForeignKey('part.id'))
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    def __init__(self, name, part_id):
+        self.name = name
+        self.part_id = part_id
+
+
+class HealthRecord(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    diagnosis = db.Column(db.Text)
+    description = db.Column(db.Text)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    def __init__(self, user_id, diagnosis, description):
+        self.user_id = user_id
+        self.diagnosis = diagnosis
+        self.description = description
+
+
 db.create_all()
 
-
-# q = Question.query.filter_by(id=6).first()
-# print (len(q.childs))
-# exit(0)
+#
+q = Part.query.filter_by(id=1).first()
+print (q.symptoms)
+exit(0)
 
 
 @app.route('/', methods=['GET'])
