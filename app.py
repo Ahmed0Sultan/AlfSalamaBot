@@ -50,17 +50,16 @@ class User(db.Model):
 class Question(db.Model):
     ROUTE_NO = 0
     ROUTE_YES = 1
-    ROUTE_SYMPTOM = 2  # will use to indicate that this record blongs to symptoms not question
+    # ROUTE_SYMPTOM = 2 # will use to indicate that this record blongs to symptoms not question
 
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.TEXT, nullable=false)
     route = db.Column(db.Integer, default=0)
-    parent_id = db.Column(db.Integer)
+    parent_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
-    # parent = relation('Question', backref='Question', lazy='dynamic', primaryjoin="Question.id == Question.parent_id")
-
-    # childs = relation('Question', backref='Question', remote_side=[parent_id])
+    parent = relation('Question', remote_side=[id])
+    childs = relation('Question', remote_side=[parent_id])
 
     def __init__(self, question, route, parent_id):
         self.question = question
@@ -108,8 +107,8 @@ class HealthRecord(db.Model):
 db.create_all()
 
 #
-q = Part.query.filter_by(id=1).first()
-print (q.symptoms)
+q = Question.query.filter_by(id=1).first()
+print (q.childs)
 exit(0)
 
 
