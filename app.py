@@ -1,24 +1,30 @@
 # coding=utf8
 import datetime
 import sys
-
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import false
-
 from FacebookAPI import *
 from config import *
+from flask.ext.login import LoginManager
+from flask.ext.login import login_user, logout_user, current_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from flask import Flask, request,render_template,redirect
+from flask import Flask, request,render_template,redirect,flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bot.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = false
+app.config['SECRET_KEY'] = 'super-secret'
 db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 token = get_page_access_token()
 
@@ -38,10 +44,28 @@ class User(db.Model):
     def __init__(self, name, username, password, email, phone, age):
         self.name = name
         self.username = username
-        self.password = password
+        self.set_password(password)
         self.email = email
         self.phone = phone
         self.age = age
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -106,7 +130,9 @@ class HealthRecord(db.Model):
 
 db.create_all()
 
-#
+# admin = User('Admin','admin','admin','admin@admin.com',None,None)
+# db.session.add(admin)
+# db.session.commit()
 # q = Question.query.filter_by(id=1).first()
 # print (q.childs)
 # exit(0)
@@ -179,6 +205,7 @@ def webhook():
 
 
 @app.route('/new-question', methods=['POST','GET'])
+@login_required
 def new_question():
     if request.method == 'POST':
         question = Question(request.form['question'],request.form['select-symptom'],None)
@@ -198,6 +225,7 @@ def new_question():
     return "FAILED", 400
 
 @app.route('/new-body-part', methods=['POST','GET'])
+@login_required
 def new_body_part():
     if request.method == 'POST':
         name = request.form['body-part']
@@ -210,6 +238,7 @@ def new_body_part():
     return "FAILED", 400
 
 @app.route('/new-symptom', methods=['POST','GET'])
+@login_required
 def new_symptom():
     if request.method == 'POST':
         part_id = request.form['select-symptom']
@@ -225,6 +254,7 @@ def new_symptom():
     return "FAILED", 400
 
 @app.route('/flowcharts/<question_id>', methods=['GET', 'POST'])
+@login_required
 def flowchart(question_id):
     if request.method == 'GET':
         question = Question.query.filter_by(id = question_id).first()
@@ -242,6 +272,7 @@ def flowchart(question_id):
 
 
 @app.route('/flowcharts', methods=['GET', 'POST'])
+@login_required
 def flowcharts():
     if request.method == 'GET':
         items = []
@@ -251,6 +282,35 @@ def flowcharts():
             part = Part.query.filter_by(id=symptom.part_id).first()
             items.append({'Q_id':question.id,'Q_name':question.question,'S_name':symptom.name,'P_name':part.name})
         return render_template('flowcharts.html',items=items)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('new_question'))
+    if request.method == 'GET':
+        return render_template('login.html')
+
+    email = request.form['email']
+    password = request.form['password']
+    registered_user = User.query.filter_by(email=email).first()
+    if registered_user is None:
+        flash('Username is invalid', 'error')
+        return redirect(url_for('login'))
+    if not registered_user.check_password(password):
+        flash('Password is invalid', 'error')
+        return redirect(url_for('login'))
+    login_user(registered_user)
+    flash('Logged in successfully')
+    return redirect(url_for('new_question'))
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
