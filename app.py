@@ -233,6 +233,7 @@ def flowchart(question_id):
         else:
             return 'Not Available'
     elif request.method == 'POST':
+        print request.json
         question = Question(request.json['question'],request.json['route'],request.json['parentID'])
         db.session.add(question)
         db.session.commit()
