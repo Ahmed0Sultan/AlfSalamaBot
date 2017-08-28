@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ادخال سؤال جديد</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{url_for('static', filename='assets/css/mdb.min.css')}}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{url_for('static', filename='assets/css/style.css')}}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f8f9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .rtl {
+            direction: rtl;
+        }
+        
+        h1.section-heading.bq-title {
+            font-weight: 400;
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            padding-left: 2rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            color: #4285F4;
+        }
+        
+        .md-form label {
+            right: 0;
+        }
+        
+        .yes-tree .accordion-inner.card-body {
+            border-right: 3px solid #00C851;
+        }
+        
+        .no-tree .accordion-inner.card-body {
+            border-right: 3px solid #ff3547;
+        }
+        
+        .yes-tree a.accordion-toggle {
+            color: #00C851;
+        }
+        
+        .no-tree a.accordion-toggle {
+            color: #ff3547;
+        }
+        
+        .form-control {
+            width: 122%;
+        }
+        
+        .select-group {
+            padding-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Start your project here-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <!--<a class="navbar-brand" href="#">الف سلامة</a>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse right" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link waves-effect waves-light" href="/new-question">اضافة خريطة تدفق <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="/flowcharts">عرض خرائط التدفق</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="/new-body-part">ادخال عضو جسم جديد</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="/new-symptom">ادخال عرض جديد</a>
+                </li>
+
+            </ul>
+            <!--<form class="form-inline waves-effect waves-light">-->
+            <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+            <!--</form>-->
+        </div>
+    </nav>
+    <div class="content rtl">
+        <div class="first-question">
+            <form method="post">
+                <h1 class="section-heading bq-title">ادخل خريطة تدفق جديدة</h1>
+
+                <div class="form-group">
+                    <label for="select111" class="select-group col-md-2 control-label">العرض</label>
+
+                    <div class="select-group col-md-10">
+                        <select name="select-symptom" id="select-symptom" class=" select-group form-control" required>
+                            {% for symptom_part in symptoms_parts %}
+                            <option value="{{ symptom_part[0] }}">{{ symptom_part[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="md-form">
+                    <textarea type="text" name="question" id="form7" class="md-textarea" required></textarea>
+                    <label for="form7" class="">السؤال</label>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary waves-effect waves-light">ادخال</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{{url_for('static', filename='assets/js/jquery-3.1.1.min.js')}}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{url_for('static', filename='assets/js/popper.min.js')}}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{url_for('static', filename='assets/js/bootstrap.min.js')}}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{url_for('static', filename='assets/js/mdb.min.js')}}"></script>
+</body>
+
+</html>

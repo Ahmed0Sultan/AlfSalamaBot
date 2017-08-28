@@ -11,7 +11,7 @@ from config import *
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from flask import Flask, request
+from flask import Flask, request,render_template,redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,27 +27,39 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     username = db.Column(db.String(), unique=True)
-    password = db.Column(db.String())
     email = db.Column(db.String(), unique=True)
+    password = db.Column(db.String())
+    phone = db.Column(db.String(), unique=True)
+    age = db.Column(db.Integer)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
-    def __init__(self, name, username, password, email):
+    health_records = relation('HealthRecord')
+
+    def __init__(self, name, username, password, email, phone, age):
         self.name = name
         self.username = username
         self.password = password
         self.email = email
+        self.phone = phone
+        self.age = age
 
     def __repr__(self):
         return '<User %r>' % self.username
 
 
 class Question(db.Model):
+    ROUTE_NO = 0
+    ROUTE_YES = 1
+    # ROUTE_SYMPTOM = 2 # will use to indicate that this record belongs to symptoms not question
+
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.TEXT, nullable=false)
-    route = db.Column(db.Boolean,  default=0)
+    route = db.Column(db.Integer, default=0)
     parent_id = db.Column(db.Integer, db.ForeignKey('question.id'))
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
     parent = relation('Question', remote_side=[id])
     childs = relation('Question', remote_side=[parent_id])
-    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
     def __init__(self, question, route, parent_id):
         self.question = question
@@ -55,11 +67,48 @@ class Question(db.Model):
         self.parent_id = parent_id
 
 
+# body parts
+class Part(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), unique=True)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    symptoms = relation('Symptom')
+
+    def __init__(self, name):
+        self.name = name
+
+
+# الاعراض الخاصه بالعضو
+class Symptom(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), unique=True)
+    part_id = db.Column(db.Integer, db.ForeignKey('part.id'))
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    def __init__(self, name, part_id):
+        self.name = name
+        self.part_id = part_id
+
+
+class HealthRecord(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    diagnosis = db.Column(db.Text)
+    description = db.Column(db.Text)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    def __init__(self, user_id, diagnosis, description):
+        self.user_id = user_id
+        self.diagnosis = diagnosis
+        self.description = description
+
+
 db.create_all()
 
-
-# q = Question.query.filter_by(id=6).first()
-# print (len(q.childs))
+#
+# q = Question.query.filter_by(id=1).first()
+# print (q.childs)
 # exit(0)
 
 
@@ -129,19 +178,78 @@ def webhook():
     return "ok", 200
 
 
-@app.route('/new-question', methods=['POST'])
+@app.route('/new-question', methods=['POST','GET'])
 def new_question():
-    if (request.form.get('question') is not None) and (request.form.get('parent_id') is not None) and (request.form.get(
-            'route') is not None):  # route check left or right branch 0 or 1
-        q = Question(str(request.form.get('question')), int(request.form.get('route')),
-                     int(request.form.get('parent_id')))
-        # q.created_at = datetime.datetime.utcnow
-        db.session.add(q)
+    if request.method == 'POST':
+        question = Question(request.form['question'],request.form['select-symptom'],None)
+        db.session.add(question)
         db.session.commit()
-        return "OK", 200
-
+        # return render_template('flowchart.html', question=question)
+        url = 'flowcharts/'+ str(question.id)
+        return redirect(url)
+    elif request.method == 'GET':
+        symptoms_parts = []
+        symptoms = Symptom.query.all()
+        for symptom in symptoms:
+            id = symptom.id
+            part = Part.query.filter_by(id = symptom.part_id).first()
+            symptoms_parts.append([id,symptom.name + ' ( '+ part.name + ' )'])
+        return render_template('add-question.html',symptoms_parts = symptoms_parts)
     return "FAILED", 400
 
+@app.route('/new-body-part', methods=['POST','GET'])
+def new_body_part():
+    if request.method == 'POST':
+        name = request.form['body-part']
+        part = Part(name)
+        db.session.add(part)
+        db.session.commit()
+        return render_template('new-body-part.html')
+    elif request.method == 'GET':
+        return render_template('new-body-part.html')
+    return "FAILED", 400
+
+@app.route('/new-symptom', methods=['POST','GET'])
+def new_symptom():
+    if request.method == 'POST':
+        part_id = request.form['select-symptom']
+        name = request.form['symptom']
+        symptom = Symptom(name,part_id)
+        db.session.add(symptom)
+        db.session.commit()
+        parts = Part.query.all()
+        return render_template('new-symptom.html',parts = parts)
+    elif request.method == 'GET':
+        parts = Part.query.all()
+        return render_template('new-symptom.html',parts = parts)
+    return "FAILED", 400
+
+@app.route('/flowcharts/<question_id>', methods=['GET', 'POST'])
+def flowchart(question_id):
+    if request.method == 'GET':
+        question = Question.query.filter_by(id = question_id).first()
+        if question.parent_id == None:
+            return render_template('flowchart.html',question=question)
+        else:
+            return 'Not Available'
+    elif request.method == 'POST':
+        question = Question(request.json['question'],request.json['route'],request.json['parentID'])
+        db.session.add(question)
+        db.session.commit()
+        question = Question.query.filter_by(id=question_id).first()
+        return render_template('flowchart.html', question=question)
+
+
+@app.route('/flowcharts', methods=['GET', 'POST'])
+def flowcharts():
+    if request.method == 'GET':
+        items = []
+        questions = Question.query.filter_by(parent_id = None).all()
+        for question in questions:
+            symptom = Symptom.query.filter_by(id=question.route).first()
+            part = Part.query.filter_by(id=symptom.part_id).first()
+            items.append({'Q_id':question.id,'Q_name':question.question,'S_name':symptom.name,'P_name':part.name})
+        return render_template('flowcharts.html',items=items)
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)

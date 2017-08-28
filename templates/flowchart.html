@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{ question.question }}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{url_for('static', filename='assets/css/mdb.min.css')}}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{url_for('static', filename='assets/css/style.css')}}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f8f9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .rtl {
+            direction: rtl;
+        }
+        
+        h1.section-heading.bq-title {
+            font-weight: 400;
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            padding-left: 2rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            color: #4285F4;
+        }
+        
+        .md-form label {
+            right: 0;
+        }
+        
+        .form-control {
+            width: 122%;
+        }
+        
+        .select-group {
+            padding-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Start your project here-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <!--<a class="navbar-brand" href="#">الف سلامة</a>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse right" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link waves-effect waves-light" href="/new-question">اضافة خريطة تدفق <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link waves-effect waves-light" href="/flowcharts">عرض خرائط التدفق</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="/new-body-part">ادخال عضو جسم جديد</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="/new-symptom">ادخال عرض جديد</a>
+                </li>
+
+            </ul>
+            <!--<form class="form-inline waves-effect waves-light">-->
+            <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+            <!--</form>-->
+        </div>
+    </nav>
+    <div class="content rtl">
+        <div class="accordion" id="accordion0">
+            <div class="accordion-group card">
+                <div class="accordion-heading card-header">
+                    <a class="accordion-toggle " data-toggle="collapse" data-parent="#accordion0" href="#collapse{{ question.id }}">
+              السؤال
+              </a>
+                </div>
+
+                <div id="collapse{{ question.id }}" class="accordion-body collapse in">
+                    <div class="accordion-inner card-body">
+                        {{ question.question }} {% if question.childs %} {% if question.childs|length == 1 %} {% if question.childs[0].route == 1 %}
+                        <button type="button" data-parent-id="{{ question.id }}" data-toggle="modal" data-target="#no-modal" class="btn btn-danger btn-rounded waves-effect waves-light">اضف لا</button>
+                        {% elif question.childs[0].route == 0 %}
+                        <button type="button" data-parent-id="{{ question.id }}" data-toggle="modal" data-target="#yes-modal" class="btn btn-success btn-rounded waves-effect waves-light">اضف نعم</button>
+                        {% endif %} {% endif %}
+
+                        <div class="accordion" id="accordion{{ question.id }}">
+                            {% for q in question.childs recursive %} {% if q.route == 1 %}
+
+                            <div class="accordion-group yes-tree card">
+                                <div class="accordion-heading card-header">
+                                    <a class="accordion-toggle" style="color: #00C851 !important;" data-toggle="collapse" data-parent="#accordion{{ q.parent.id }}" href="#collapse{{ q.id }}">
+                            نعم
+                          </a>
+                                </div>
+                                <div id="collapse{{ q.id }}" class="accordion-body collapse in">
+                                    <div style="border-right: 3px solid #00C851 !important;" class="accordion-inner card-body">
+                                        {{ q.question }} {% if q.childs %} {% if q.childs|length == 1 %} {% if q.childs[0].route == 1 %}
+                                        <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#no-modal" class="btn btn-danger btn-rounded waves-effect waves-light">اضف لا</button>
+                                        {% elif q.childs[0].route == 0 %}
+                                        <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#yes-modal" class="btn btn-success btn-rounded waves-effect waves-light">اضف نعم</button>
+                                        {% endif %} {% endif %} {% else %}
+                                        <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#yes-modal" class="btn btn-success btn-rounded waves-effect waves-light">اضف نعم</button>
+                                        <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#no-modal" class="btn btn-danger btn-rounded waves-effect waves-light">اضف لا</button>
+
+                                        {% endif %}
+                                        <div class="accordion" id="accordion{{ q.id }}">
+                                            {{ loop(q.childs) }}
+                                        </div>
+                                        {% elif q.route == 0 %}
+                                        <div class="accordion-group no-tree card">
+                                            <div class="accordion-heading card-header">
+                                                <a class="accordion-toggle" style="color: #ff3547 !important;#}" data-toggle="collapse" data-parent="#accordion{{ q.parent.id }}" href="#collapse{{ q.id }}">
+                            لا
+                          </a>
+                                            </div>
+                                            <div id="collapse{{ q.id }}" class="accordion-body collapse in">
+                                                <div style="border-right: 3px solid #ff3547 !important;" class="accordion-inner card-body">
+                                                    {{ q.question }} {% if q.childs %} {% if q.childs|length == 1 %} {% if q.childs[0].route == 1 %}
+                                                    <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#no-modal" class="btn btn-danger btn-rounded waves-effect waves-light">اضف لا</button>
+                                                    {% elif q.childs[0].route == 0 %}
+                                                    <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#yes-modal" class="btn btn-success btn-rounded waves-effect waves-light">اضف نعم</button>
+                                                    {% endif %} {% endif %} {% else %}
+                                                    <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#yes-modal" class="btn btn-success btn-rounded waves-effect waves-light">اضف نعم</button>
+                                                    <button type="button" data-parent-id="{{ q.id }}" data-toggle="modal" data-target="#no-modal" class="btn btn-danger btn-rounded waves-effect waves-light">اضف لا</button>
+
+                                                    {% endif %}
+                                                    <div class="accordion" id="accordion{{ q.id }}">
+                                                        {{ loop(q.childs) }}
+                                                    </div>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %} {% else %}
+                                        <button type="button" data-parent-id="{{ question.id }}" data-toggle="modal" data-target="#yes-modal" class="btn btn-success btn-rounded waves-effect waves-light">اضف نعم</button>
+                                        <button type="button" data-parent-id="{{ question.id }}" data-toggle="modal" data-target="#no-modal" class="btn btn-danger btn-rounded waves-effect waves-light">اضف لا</button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="rtl modal" id="yes-modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="post">
+                                    <div class="modal-header" style="direction: ltr;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="rtl modal-title">اضف نعم</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" id="replyForm-name" class="yes-route form-control" name="route" value="1" hidden>
+                                        <input type="text" id="replyForm-name" class="yes-parent parent-id form-control" name="parent-id" hidden>
+                                        <div class="md-form">
+                                            <textarea type="text" name="question" id="form7" class="yes-question question-value md-textarea" required></textarea>
+                                            <label for="form7" class="">السؤال</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="direction: ltr;">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلق</button>
+                                        <button type="button" class="btn yes-button btn-primary" data-dismiss="modal">ادخال</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rtl modal" id="no-modal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="post">
+                                    <div class="modal-header" style="direction: ltr;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="rtl modal-title">اضف لا</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" id="replyForm-name" class="no-route form-control" name="route" value="0" hidden>
+                                        <input type="text" id="replyForm-name" class="no-parent parent-id form-control" name="parent-id" hidden>
+                                        <div class="md-form">
+                                            <textarea type="text" name="question" id="form7" class="no-question question-value md-textarea" required></textarea>
+                                            <label for="form7" class="">السؤال</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" style="direction: ltr;">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلق</button>
+                                        <button type="button" class="btn no-button btn-primary" data-dismiss="modal">ادخال</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- JQuery -->
+                    <script type="text/javascript" src="{{url_for('static', filename='assets/js/jquery-3.1.1.min.js')}}"></script>
+                    <!-- Bootstrap tooltips -->
+                    <script type="text/javascript" src="{{url_for('static', filename='assets/js/popper.min.js')}}"></script>
+                    <!-- Bootstrap core JavaScript -->
+                    <script type="text/javascript" src="{{url_for('static', filename='assets/js/bootstrap.min.js')}}"></script>
+                    <!-- MDB core JavaScript -->
+                    <script type="text/javascript" src="{{url_for('static', filename='assets/js/mdb.min.js')}}"></script>
+                    <!-- SCRIPTS -->
+                    <script>
+                        $('.modal').on('show.bs.modal', function (event) {
+                            var button = $(event.relatedTarget);
+                            var parentID = button.data('parent-id');
+                            var modal = $(this);
+                            modal.find('.parent-id').val(parentID)
+                            modal.find('.question-value').val('')
+                        });
+                        $(".yes-button").click(function (e) {
+                            e.preventDefault();
+                            $.ajax({
+                                type: "POST",
+                                url: "/flowcharts/{{ question.id }}",
+                                data: JSON.stringify({
+                                    route: $('.yes-route').val(),
+                                    parentID: $('.yes-parent').val(),
+                                    question: $(".yes-question").val()
+                                }),
+                                contentType: 'application/json;charset=UTF-8',
+                                success: function (result) {
+                                    var source = $('' + result + '');
+                                    parentName = '#collapse' + $('.yes-parent').val();
+                                    elem = source.find(parentName).html();
+                                    $(parentName).html(elem);
+                                },
+                                error: function (result) {
+                                    alert('error');
+                                }
+                            });
+                        });
+                        $(".no-button").click(function (e) {
+                            e.preventDefault();
+                            $.ajax({
+                                type: "POST",
+                                url: "/flowcharts/{{ question.id }}",
+                                data: JSON.stringify({
+                                    route: $('.no-route').val(),
+                                    parentID: $('.no-parent').val(),
+                                    question: $(".no-question").val()
+                                }),
+                                contentType: 'application/json;charset=UTF-8',
+                                success: function (result) {
+                                    var source = $('' + result + '');
+                                    parentName = '#collapse' + $('.no-parent').val();
+                                    elem = source.find(parentName).html();
+                                    $(parentName).html(elem);
+                                },
+                                error: function (result) {
+                                    alert('error');
+                                }
+                            });
+                        });
+                    </script>
+</body>
+
+</html>
