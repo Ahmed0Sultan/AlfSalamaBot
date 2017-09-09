@@ -5,8 +5,8 @@ from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import false
 from FacebookAPI import *
 from config import *
-from flask.ext.login import LoginManager
-from flask.ext.login import login_user, logout_user, current_user, login_required
+from flask_login import LoginManager
+from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 reload(sys)
