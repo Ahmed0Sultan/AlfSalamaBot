@@ -245,6 +245,29 @@ def send_question_answer_quick_replies(token, user_id, question_id, intro):
     if r.status_code != requests.codes.ok:
         print r.text
 
+def send_complete_data_quick_replies(token, user_id, intro):
+
+    quickRepliesOptions = [
+        {"content_type": "text",
+         "title": "استكمال البيانات",
+         "payload":'Complete_Data'
+         }
+    ]
+    data = json.dumps({
+        "recipient": {"id": user_id},
+        "message": {
+            "text": intro,
+            "quick_replies": quickRepliesOptions
+        }
+    })
+    data = data.encode('utf-8')
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=data,
+                      headers={'Content-type': 'application/json'})
+
+    if r.status_code != requests.codes.ok:
+        print r.text
 
 def set_menu(token):
     r = requests.post("https://graph.facebook.com/v2.6/me/messenger_profile",

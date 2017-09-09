@@ -164,6 +164,8 @@ def handle_messages():
 
             if response is not None:
                 FB.send_message(token, sender_id, response)
+            elif response == 'postback':
+                pass
 
             else:
                 FB.send_message(token, sender_id, "Sorry I don't understand that")
@@ -180,11 +182,15 @@ def processIncoming(user_id, message):
 
         return message_text
 
-    if message['type'] == 'postback':
+    elif message['type'] == 'postback':
         message_payload = message['payload']
         payload_response = payloadProcessing(user_id,message_payload)
         return payload_response
 
+    elif message['type'] == 'quick_reply':
+        quick_reply_payload = message['message']['quick_reply']['payload']
+        quick_reply_response = quickReplyProcessing(user_id, quick_reply_payload)
+        return quick_reply_response
 
     elif message['type'] == 'location':
         response = "I've received location (%s,%s) (y)"%(message['data'][0],message['data'][1])
@@ -252,10 +258,22 @@ def payloadProcessing(user_id,message_payload):
     if message_payload == 'Get_Started_Button':
         user = FB.get_user_fb(token, user_id)
         msg = u" مرحبا بك يا "
-        return user.get('first_name') + msg
-    elif message_payload == 'Akla_Menu':
+        FB.send_message(token,user_id,user.get('first_name') + msg)
+        intro = u"يمكنك الأن استشارة الف سلامة بوت و ادخال الأعراض التى تشعر بها لتعرف حالتك و تطمئن على صحتك فى اسرع وقت"
+        FB.send_message(token, user_id,intro)
+        intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
+        FB.send_complete_data_quick_replies(token, user_id, intro)
+    elif message_payload == 'Complete_Data':
         print 'من فضلك اختر شيئاً من القائمة'
         return 'من فضلك اختر شيئاً من القائمة'
+
+    return 'postback'
+
+def quickReplyProcessing(user_id,quick_reply_payload):
+    if quick_reply_payload == 'Complete_Data':
+        return u"تم تسجيل بيانتك بنجاح"
+
+    return 'postback'
 
 
 @app.route('/new-question', methods=['POST','GET'])
