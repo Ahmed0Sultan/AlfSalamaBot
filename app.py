@@ -164,7 +164,7 @@ def handle_messages():
 
             if response == 'postback':
                 pass
-            
+
             elif response is not None:
                 FB.send_message(token, sender_id, response)
 
@@ -189,7 +189,7 @@ def processIncoming(user_id, message):
         return payload_response
 
     elif message['type'] == 'quick_reply':
-        quick_reply_payload = message['message']['quick_reply']['payload']
+        quick_reply_payload = message['data']
         quick_reply_response = quickReplyProcessing(user_id, quick_reply_payload)
         return quick_reply_response
 
