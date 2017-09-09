@@ -1,9 +1,9 @@
 # coding=utf8
-import datetime
-import sys
+import datetime,json
+import sys, traceback
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import false
-from FacebookAPI import *
+import FacebookAPI as FB
 from config import *
 from flask_login import LoginManager
 from flask_login import login_user, logout_user, current_user, login_required
@@ -12,7 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from flask import Flask, request,render_template,redirect,flash
+from flask import Flask, request,render_template,redirect,flash,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -153,57 +153,109 @@ def verify():
 
 
 @app.route('/', methods=['POST'])
-def webhook():
-    # endpoint for processing incoming messaging events
+def handle_messages():
+    payload = request.get_data()
 
-    data = request.get_json()
-    log(data)  # you may not want to log every incoming message in production, but it's good for testing
+    # Handle messages
+    for sender_id, message in messaging_events(payload):
+        # Start processing valid requests
+        try:
+            response = processIncoming(sender_id, message)
 
-    if data.get('object') and data["object"] == "page":
+            if response is not None:
+                FB.send_message(token, sender_id, response)
 
-        for entry in data["entry"]:
-            for messaging_event in entry["messaging"]:
-                sender_id = messaging_event["sender"]["id"]
-                recipient_id = messaging_event["recipient"]["id"]
+            else:
+                FB.send_message(token, sender_id, "Sorry I don't understand that")
+        except Exception, e:
+            print e
+            traceback.print_exc()
+    return "ok"
 
-                if messaging_event.get("message"):  # someone sent us a message
-                    message_text = messaging_event["message"]["text"]
+def processIncoming(user_id, message):
+    if message['type'] == 'text':
+        message_text = message['data']
+        message_text = message_text.decode('utf-8','ignore')
+        print message_text
 
-                    if messaging_event.get("message").get('quick_reply').get('payload'):
-                        if messaging_event.get("message").get('quick_reply').get('payload').__contains__('body_part_'):
-                            q = Question.query.filter_by(id=message_text).first()
-                            send_message(token, sender_id, q.question)
-                            send_question_answer_quick_replies(token, sender_id, message_text, 'اختر الاجابة')
+        return message_text
 
-                        elif messaging_event.get("message").get('quick_reply').get('payload').__contains__('_Q&A_'):
-                            question_id_and_route = messaging_event.get("message").get('quick_reply').get(
-                                'payload').replace('_Q&A_', ',')
-                            id_route = question_id_and_route.split(',')
+    if message['type'] == 'postback':
+        message_payload = message['payload']
+        payload_response = payloadProcessing(user_id,message_payload)
+        return payload_response
 
-                            q = Question.query.filter_by(parent_id=id_route[0], route=id_route[1]).first()
-                            if q is not None:
-                                send_message(token, sender_id, q.question)
-                                if len(q.childs):
-                                    send_question_answer_quick_replies(token, sender_id, q.id, 'اختر الاجابة')
 
-                if messaging_event.get("delivery"):  # delivery confirmation
-                    pass
+    elif message['type'] == 'location':
+        response = "I've received location (%s,%s) (y)"%(message['data'][0],message['data'][1])
+        return response
 
-                if messaging_event.get("optin"):  # optin confirmation
-                    pass
+    elif message['type'] == 'audio':
+        audio_url = message['data']
+        return "I've received audio %s"%(audio_url)
 
-                if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    # if messaging_event.get("postback").get('payload').__contains__('body_part_'):
-                    #     send_message(token,messaging_event.get("postback").get('payload').replace('body_part_',''))
-                    if messaging_event.get("postback").get('payload') == "Get_Started_Button":
-                        user = get_user_fb(token, sender_id)
-                        msg = u" مرحبا بك يا "
-                        send_message(token, sender_id, user.get('first_name') + msg)
-                        send_picture(token, sender_id, 'http://flask.pocoo.org/docs/0.12/_static/flask.png', 'image',
-                                     'image')
-                        send_body_quick_replies(token, sender_id, 'اختر الرقم المقابل للعضو')
+    # Unrecognizable incoming, remove context and reset all data to start afresh
+    else:
+        return "*scratch my head*"
 
-    return "ok", 200
+
+def messaging_events(payload):
+    data = json.loads(payload)
+    messaging_events = data["entry"][0]["messaging"]
+
+    for event in messaging_events:
+        sender_id = event["sender"]["id"]
+
+        # Postback Message
+        if "postback" in event:
+            print event
+            yield sender_id, {'type': 'postback', 'payload': event['postback']['payload'], 'message_id': event["sender"]["id"]}
+
+
+        # Pure text message
+        elif "message" in event and "text" in event["message"] and "quick_reply" not in event["message"]:
+            data = event["message"]["text"].encode('unicode_escape')
+            yield sender_id, {'type': 'text', 'data': data, 'message_id': event['message']['mid']}
+
+        # Message with attachment (location, audio, photo, file, etc)
+        elif "attachments" in event["message"]:
+
+            # Location
+            if "location" == event['message']['attachments'][0]["type"]:
+                coordinates = event['message']['attachments'][
+                    0]['payload']['coordinates']
+                latitude = coordinates['lat']
+                longitude = coordinates['long']
+
+                yield sender_id, {'type': 'location', 'data': [latitude, longitude],
+                                  'message_id': event['message']['mid']}
+
+            # Audio
+            elif "audio" == event['message']['attachments'][0]["type"]:
+                audio_url = event['message'][
+                    'attachments'][0]['payload']['url']
+                yield sender_id, {'type': 'audio', 'data': audio_url, 'message_id': event['message']['mid']}
+
+            else:
+                yield sender_id, {'type': 'text', 'data': "I don't understand this",
+                                  'message_id': event['message']['mid']}
+
+        # Quick reply message type
+        elif "quick_reply" in event["message"]:
+            data = event["message"]["quick_reply"]["payload"]
+            yield sender_id, {'type': 'quick_reply', 'data': data, 'message_id': event['message']['mid']}
+
+        else:
+            yield sender_id, {'type': 'text', 'data': "I don't understand this", 'message_id': event['message']['mid']}
+
+def payloadProcessing(user_id,message_payload):
+    if message_payload == 'Get_Started_Button':
+        user = FB.get_user_fb(token, user_id)
+        msg = u" مرحبا بك يا "
+        return user.get('first_name') + msg
+    elif message_payload == 'Akla_Menu':
+        print 'من فضلك اختر شيئاً من القائمة'
+        return 'من فضلك اختر شيئاً من القائمة'
 
 
 @app.route('/new-question', methods=['POST','GET'])
