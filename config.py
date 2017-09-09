@@ -7,4 +7,4 @@ def get_page_access_token():
 
 
 def get_verify_token():
-    return os.environ.get('VERIFY_TOKEN', 'hello from alfsalama bot')
+    return os.environ.get('VERIFY_TOKEN', 'Very_Secret_Token')
