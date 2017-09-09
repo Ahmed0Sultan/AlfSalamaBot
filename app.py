@@ -17,7 +17,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bot.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bot.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = false
 app.config['SECRET_KEY'] = 'super-secret'
 db = SQLAlchemy(app)
