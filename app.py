@@ -131,9 +131,9 @@ class HealthRecord(db.Model):
 
 db.create_all()
 
-# admin = User('Admin','admin','admin','admin@admin.com',None,None)
-# db.session.add(admin)
-# db.session.commit()
+admin = User('Admin','admin','admin','admin@admin.com',None,None)
+db.session.add(admin)
+db.session.commit()
 # q = Question.query.filter_by(id=1).first()
 # print (q.childs)
 # exit(0)
@@ -260,10 +260,10 @@ def payloadProcessing(user_id,message_payload):
         user = FB.get_user_fb(token, user_id)
         msg = u" مرحبا بك يا "
         FB.send_message(token,user_id,user.get('first_name') + msg)
-        FB.show_typing(token,user_id,'typing_off')
+        FB.show_typing(token,user_id,'typing_on')
         intro = u"يمكنك الأن استشارة الف سلامة بوت و ادخال الأعراض التى تشعر بها لتعرف حالتك و تطمئن على صحتك فى اسرع وقت"
         FB.send_message(token, user_id,intro)
-        FB.show_typing(token, user_id, 'typing_off')
+        FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
         FB.send_complete_data_quick_replies(token, user_id, intro)
     elif message_payload == 'Complete_Data':
