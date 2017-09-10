@@ -267,6 +267,19 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
         FB.send_complete_data_quick_replies(token, user_id, intro)
+    elif message_payload.__contains__('body_part_'):
+        question_id_and_route = message_payload.split('_Q&A_')
+        if question_id_and_route[0] == '':
+            q = Question.query.filter_by(parent_id=None).filter_by(route=question_id_and_route[1]).first()
+            if q is not None:
+                FB.show_typing(token, user_id, 'typing_on')
+                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
+        else:
+            q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=question_id_and_route[1]).first()
+            if q is not None:
+                FB.show_typing(token, user_id, 'typing_on')
+                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
+
     elif message_payload == 'Complete_Data':
         print 'من فضلك اختر شيئاً من القائمة'
         return 'من فضلك اختر شيئاً من القائمة'
@@ -276,19 +289,31 @@ def payloadProcessing(user_id,message_payload):
 def quickReplyProcessing(user_id,quick_reply_payload):
 
     if quick_reply_payload == 'Complete_Data':
+        FB.show_typing(token, user_id, 'typing_on')
         FB.send_message(token, user_id, u"تم تسجيل بيانتك بنجاح")
+        FB.show_typing(token, user_id, 'typing_on')
         FB.send_where_to_go_quick_replies(token,user_id,u"من فضلك اختر الى اين تريد الذهاب")
     elif quick_reply_payload == "Show_Parts":
+        FB.show_typing(token, user_id, 'typing_on')
         FB.send_picture(token,user_id,url_for('static', filename="assets/img/parts_1.png", _external=True))
-        FB.send_body_quick_replies(token, user_id, u"من فضلك اختر رقم العضو")
+        FB.show_typing(token, user_id, 'typing_on')
+        FB.send_body_quick_replies(token, user_id, u"من فضلك اختر رقم العضو الذى تشكو منه")
     elif quick_reply_payload.__contains__('body_part_'):
         body_part = int(quick_reply_payload.replace('body_part_',''))
         symptoms = Symptom.query.filter_by(part_id=body_part).all()
         symptoms_list = []
         for s in symptoms:
             symptoms_list.append({
-                "title": s.name
+                "title": s.name,
+                "buttons": [
+                    {
+                        "type": "postback",
+                        "title": 'اظهر المزيد',
+                        "payload": '_Q&A_'+s.id
+                    }
+                ]
             })
+        FB.show_typing(token, user_id, 'typing_on')
         FB.send_symptoms(token, user_id, symptoms_list)
 
     return 'postback'

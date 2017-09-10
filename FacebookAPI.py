@@ -205,11 +205,11 @@ def send_question_answer_quick_replies(token, user_id, question_id, intro):
 
     quickRepliesOptions = [
         {"content_type": "text",
-         "title": "yes",
+         "title": u"نعم",
          "payload": str(question_id) + key + '1'
          },
         {"content_type": "text",
-         "title": "no",
+         "title": u"لا",
          "payload": str(question_id) + key + '0'
          }
     ]
