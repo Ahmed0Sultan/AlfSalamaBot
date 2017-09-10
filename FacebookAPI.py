@@ -200,19 +200,33 @@ def send_body_quick_replies(token, user_id, intro):
         print r.text
 
 
-def send_question_answer_quick_replies(token, user_id, question_id, intro):
+def send_question_answer_quick_replies(token, user_id, question_id, intro,route):
     key = '_Q&A_'
-
-    quickRepliesOptions = [
-        {"content_type": "text",
-         "title": u"نعم",
-         "payload": str(question_id) + key + '1'
-         },
-        {"content_type": "text",
-         "title": u"لا",
-         "payload": str(question_id) + key + '0'
-         }
-    ]
+    if route == 2 :
+        quickRepliesOptions = [
+            {"content_type": "text",
+             "title": u"نعم",
+             "payload": str(question_id) + key + '1'
+             },
+            {"content_type": "text",
+             "title": u"لا",
+             "payload": str(question_id) + key + '0'
+             }
+        ]
+    elif route == 1:
+        quickRepliesOptions = [
+            {"content_type": "text",
+             "title": u"نعم",
+             "payload": str(question_id) + key + '1'
+             }
+        ]
+    elif route == 0:
+        quickRepliesOptions = [
+            {"content_type": "text",
+             "title": u"لا",
+             "payload": str(question_id) + key + '0'
+             }
+        ]
     data = json.dumps({
         "recipient": {"id": user_id},
         "message": {

@@ -269,16 +269,22 @@ def payloadProcessing(user_id,message_payload):
         FB.send_complete_data_quick_replies(token, user_id, intro)
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
-        if question_id_and_route[0] == '':
-            q = Question.query.filter_by(parent_id=None).filter_by(route=int(question_id_and_route[1])).first()
-            if q is not None:
+        # if question_id_and_route[0] == '':
+        q = Question.query.filter_by(parent_id=None).filter_by(route=int(question_id_and_route[1])).first()
+        if q is not None:
+            if len(q.childs) == 2:
                 FB.show_typing(token, user_id, 'typing_on')
-                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
-        else:
-            q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=int(question_id_and_route[1])).first()
-            if q is not None:
+                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question,2)
+            elif len(q.childs) == 1:
                 FB.show_typing(token, user_id, 'typing_on')
-                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
+                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question,q.childs[0].route)
+            else:
+                FB.send_message(token, user_id, q.question)
+        # else:
+        #     q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=int(question_id_and_route[1])).first()
+        #     if q is not None:
+        #         FB.show_typing(token, user_id, 'typing_on')
+        #         FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
 
     elif message_payload == 'Complete_Data':
         print 'من فضلك اختر شيئاً من القائمة'
@@ -318,21 +324,26 @@ def quickReplyProcessing(user_id,quick_reply_payload):
 
     elif quick_reply_payload.__contains__('_Q&A_'):
         question_id_and_route = quick_reply_payload.split('_Q&A_')
-        if question_id_and_route[0] == '':
-            q = Question.query.filter_by(parent_id=None).filter_by(route=int(question_id_and_route[1])).first()
-            if q is not None:
-                if len(q.childs):
-                    print 'Heeeeeeeeereeeeeeeeeeeeeee' + str(q.childs[0].route)
-                    FB.show_typing(token, user_id, 'typing_on')
-                    FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
-                else:
-                    FB.send_message(token, user_id, q.question)
-        else:
-            q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=int(question_id_and_route[1])).first()
-            if len(q.childs):
-                print 'Heeeeeeeeereeeeeeeeeeeeeee' + str(q.childs[0].route)
+        # if question_id_and_route[0] == '':
+        #     q = Question.query.filter_by(parent_id=None).filter_by(route=int(question_id_and_route[1])).first()
+        #     if q is not None:
+        #         if len(q.childs) == 2:
+        #             FB.show_typing(token, user_id, 'typing_on')
+        #             FB.send_question_answer_quick_replies(token, user_id, q.id, q.question,2)
+        #         elif len(q.childs) == 1:
+        #             FB.show_typing(token, user_id, 'typing_on')
+        #             FB.send_question_answer_quick_replies(token, user_id, q.id, q.question,q.childs[0].route)
+        #         else:
+        #             FB.send_message(token, user_id, q.question)
+        # else:
+        q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=int(question_id_and_route[1])).first()
+        if q is not None:
+            if len(q.childs) == 2:
                 FB.show_typing(token, user_id, 'typing_on')
-                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
+                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question,2)
+            elif len(q.childs) == 1:
+                FB.show_typing(token, user_id, 'typing_on')
+                FB.send_question_answer_quick_replies(token, user_id, q.id, q.question,q.childs[0].route)
             else:
                 FB.send_message(token, user_id, q.question)
 
