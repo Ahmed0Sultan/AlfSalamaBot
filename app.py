@@ -429,6 +429,12 @@ def flowcharts():
             items.append({'Q_id':question.id,'Q_name':question.question,'S_name':symptom.name,'P_name':part.name})
         return render_template('flowcharts.html',items=items)
 
+@app.route('/complete-data', methods=['GET', 'POST'])
+def completeData():
+    if request.method == 'GET':
+
+        return render_template('complete-data.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
