@@ -165,6 +165,7 @@ def handle_messages():
             if response == 'postback':
                 pass
 
+
             elif response is not None:
                 FB.send_message(token, sender_id, response)
 
@@ -273,8 +274,22 @@ def payloadProcessing(user_id,message_payload):
     return 'postback'
 
 def quickReplyProcessing(user_id,quick_reply_payload):
+
     if quick_reply_payload == 'Complete_Data':
-        return u"تم تسجيل بيانتك بنجاح"
+        FB.send_message(token, user_id, u"تم تسجيل بيانتك بنجاح")
+        FB.send_where_to_go_quick_replies(token,user_id,u"من فضلك اختر الى اين تريد الذهاب")
+    elif quick_reply_payload == "Show_Parts":
+        FB.send_picture(token,user_id,url_for('static', filename="assets/img/parts_1.png", _external=True))
+        FB.send_body_quick_replies(token, user_id, u"من فضلك اختر رقم العضو")
+    elif quick_reply_payload.__contains__('body_part_'):
+        body_part = int(quick_reply_payload.replace('body_part_',''))
+        symptoms = Symptom.query.filter_by(part_id=body_part).all()
+        symptoms_list = []
+        for s in symptoms:
+            symptoms_list.append({
+                "title": s.name
+            })
+        FB.send_symptoms(token, user_id, symptoms_list)
 
     return 'postback'
 

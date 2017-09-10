@@ -181,22 +181,6 @@ def send_body_quick_replies(token, user_id, intro):
         {"content_type": "text",
          "title": "6",
          "payload": body_key + '6'
-         },
-        {"content_type": "text",
-         "title": "7",
-         "payload": body_key + '7'
-         },
-        {"content_type": "text",
-         "title": "8",
-         "payload": body_key + '8'
-         },
-        {"content_type": "text",
-         "title": "9",
-         "payload": body_key + '9'
-         },
-        {"content_type": "text",
-         "title": "10",
-         "payload": body_key + '10'
          }
     ]
     data = json.dumps({
@@ -266,6 +250,50 @@ def send_complete_data_quick_replies(token, user_id, intro):
                       data=data,
                       headers={'Content-type': 'application/json'})
 
+    if r.status_code != requests.codes.ok:
+        print r.text
+
+def send_where_to_go_quick_replies(token, user_id, intro):
+
+    quickRepliesOptions = [
+        {"content_type": "text",
+         "title": "استشارة",
+         "payload":'Show_Parts'
+         }
+    ]
+    data = json.dumps({
+        "recipient": {"id": user_id},
+        "message": {
+            "text": intro,
+            "quick_replies": quickRepliesOptions
+        }
+    })
+    data = data.encode('utf-8')
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=data,
+                      headers={'Content-type': 'application/json'})
+
+    if r.status_code != requests.codes.ok:
+        print r.text
+
+def send_symptoms(token, user_id,options):
+
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+          params={"access_token": token},
+          data=json.dumps({
+                "recipient": {"id": user_id},
+                "message":{
+                    "attachment":{
+                        "type":"template",
+                        "payload":{
+                            "template_type":"generic",
+                            "elements": options
+                        }
+                    }
+                }
+          }),
+          headers={'Content-type': 'application/json'})
     if r.status_code != requests.codes.ok:
         print r.text
 
