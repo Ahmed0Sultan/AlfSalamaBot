@@ -267,7 +267,7 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
         FB.send_complete_data_quick_replies(token, user_id, intro)
-    elif message_payload.__contains__('body_part_'):
+    elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
         if question_id_and_route[0] == '':
             q = Question.query.filter_by(parent_id=None).filter_by(route=int(question_id_and_route[1])).first()
