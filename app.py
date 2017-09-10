@@ -270,12 +270,12 @@ def payloadProcessing(user_id,message_payload):
     elif message_payload.__contains__('body_part_'):
         question_id_and_route = message_payload.split('_Q&A_')
         if question_id_and_route[0] == '':
-            q = Question.query.filter_by(parent_id=None).filter_by(route=question_id_and_route[1]).first()
+            q = Question.query.filter_by(parent_id=None).filter_by(route=int(question_id_and_route[1])).first()
             if q is not None:
                 FB.show_typing(token, user_id, 'typing_on')
                 FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
         else:
-            q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=question_id_and_route[1]).first()
+            q = Question.query.filter_by(parent_id=question_id_and_route[0]).filter_by(route=int(question_id_and_route[1])).first()
             if q is not None:
                 FB.show_typing(token, user_id, 'typing_on')
                 FB.send_question_answer_quick_replies(token, user_id, q.id, q.question)
@@ -309,7 +309,7 @@ def quickReplyProcessing(user_id,quick_reply_payload):
                     {
                         "type": "postback",
                         "title": 'اظهر المزيد',
-                        "payload": '_Q&A_'+s.id
+                        "payload": '_Q&A_'+str(s.id)
                     }
                 ]
             })
