@@ -92,7 +92,7 @@
         <div class="first-question">
             <form method="post">
 {#                <h1 class="section-heading bq-title">ادخل عضو جديد</h1>#}
-                <input type="text" name="id" value="{{ user_id }}">
+                <input type="text" name="id" value="{{ user_id }}" hidden>
                 <div class="md-form">
                     <input type="text" id="replyForm-name" class="form-control" value="{{ name }}" name="name" required>
                     <label for="replyForm-name">الأسم</label>
@@ -122,7 +122,20 @@
         </div>
     </div>
     <!-- /Start your project here-->
-
+    <script>
+        $(document).ready(function() {
+          $("form").submit(function() {
+            // submit form
+            $.post($("form").attr('action'), $("form").serializeArray());
+            // alert
+            alert("The request has been submitted.");
+            // close window
+            window.close();
+            // return
+            return false;
+          });
+        });
+    </script>
     <!-- SCRIPTS -->
     <!-- JQuery -->
     <script type="text/javascript" src="{{url_for('static', filename='assets/js/jquery-3.1.1.min.js')}}"></script>
