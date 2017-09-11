@@ -74,6 +74,31 @@ def send_picture(token, user_id, imageUrl, title="", subtitle=""):
     if r.status_code != requests.codes.ok:
         print r.text
 
+def send_complete_data_button(token, user_id, intro):
+    data = {"recipient": {"id": user_id},
+            "message": {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "button",
+                        "text": intro,
+                        "buttons":[{
+                            "type":"web_url",
+                            "url":"https://alfsalama.herokuapp.com/complete-data/"+str(user_id),
+                            "title": u"استكمال البيانات"
+                          }]
+                    }
+                }
+            }
+            }
+
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=json.dumps(data),
+                      headers={'Content-type': 'application/json'})
+    if r.status_code != requests.codes.ok:
+        print r.text
+
 
 def send_url(token, user_id, text, title, url):
     r = requests.post("https://graph.facebook.com/v2.6/me/messages",

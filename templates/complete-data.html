@@ -92,9 +92,9 @@
         <div class="first-question">
             <form method="post">
 {#                <h1 class="section-heading bq-title">ادخل عضو جديد</h1>#}
-
+                <input type="text" name="id" value="{{ user_id }}">
                 <div class="md-form">
-                    <input type="text" id="replyForm-name" class="form-control" name="name" required>
+                    <input type="text" id="replyForm-name" class="form-control" value="{{ name }}" name="name" required>
                     <label for="replyForm-name">الأسم</label>
                 </div>
                 <div class="md-form">
@@ -104,6 +104,10 @@
                 <div class="md-form">
                     <input type="text" id="replyForm-phone" class="form-control" name="phone" required>
                     <label for="replyForm-phone">الهاتف</label>
+                </div>
+                <div class="md-form">
+                    <input type="text" id="replyForm-age" class="form-control" name="age" required>
+                    <label for="replyForm-age">العمر</label>
                 </div>
                 <div class="md-form">
                     <input type="text" id="replyForm-location" class="form-control" name="location" required>

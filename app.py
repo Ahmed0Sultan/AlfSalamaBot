@@ -33,22 +33,24 @@ token = get_page_access_token()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    username = db.Column(db.String(), unique=True)
+    username = db.Column(db.String(), unique=True) #also stores messenger user id
     email = db.Column(db.String(), unique=True)
     password = db.Column(db.String())
+    location = db.Column(db.String())
     phone = db.Column(db.String(), unique=True)
     age = db.Column(db.Integer)
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
     health_records = relation('HealthRecord')
 
-    def __init__(self, name, username, password, email, phone, age):
+    def __init__(self, name, username, password, email, phone, age,location):
         self.name = name
         self.username = username
         self.set_password(password)
         self.email = email
         self.phone = phone
         self.age = age
+        self.location = location
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -258,15 +260,19 @@ def messaging_events(payload):
 
 def payloadProcessing(user_id,message_payload):
     if message_payload == 'Get_Started_Button':
-        user = FB.get_user_fb(token, user_id)
+        FBuser = FB.get_user_fb(token, user_id)
+        if User.query.filter_by(username=user_id).first() is None:
+            user = User(str(FBuser.get('first_name'))+' '+str(FBuser.get('last_name')),user_id,None,None,None,None,None)
+            db.session.add(user)
+            db.session.commit()
         msg = u" مرحبا بك يا "
-        FB.send_message(token,user_id,user.get('first_name') + msg)
+        FB.send_message(token,user_id,FBuser.get('first_name') + msg)
         FB.show_typing(token,user_id,'typing_on')
         intro = u"يمكنك الأن استشارة الف سلامة بوت و ادخال الأعراض التى تشعر بها لتعرف حالتك و تطمئن على صحتك فى اسرع وقت"
         FB.send_message(token, user_id,intro)
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
-        FB.send_complete_data_quick_replies(token, user_id, intro)
+        FB.send_complete_data_button(token, user_id, intro)
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
         # if question_id_and_route[0] == '':
@@ -429,10 +435,23 @@ def flowcharts():
             items.append({'Q_id':question.id,'Q_name':question.question,'S_name':symptom.name,'P_name':part.name})
         return render_template('flowcharts.html',items=items)
 
-@app.route('/complete-data', methods=['GET', 'POST'])
-def completeData():
+@app.route('/complete-data/<user_id>', methods=['GET', 'POST'])
+def completeData(user_id):
     if request.method == 'GET':
-
+        user = User.query.filter_by(username=user_id).first()
+        return render_template('complete-data.html',user_id=user_id,name=user.name)
+    elif request.method == 'POST':
+        user = User.query.filter_by(username=request.form['id']).first()
+        user.name = request.form['name']
+        user.email = request.form['email']
+        user.phone = request.form['phone']
+        user.age = request.form['age']
+        user.location = request.form['location']
+        db.session.commit()
+        FB.show_typing(token, user_id, 'typing_on')
+        FB.send_message(token,request.form['id'],u"تم تسجيل بيانتك بنجاح")
+        FB.show_typing(token, user_id, 'typing_on')
+        FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
         return render_template('complete-data.html')
 
 @app.route('/login', methods=['GET', 'POST'])

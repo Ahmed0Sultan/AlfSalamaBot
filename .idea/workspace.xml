@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FacebookAPI.py" afterPath="$PROJECT_DIR$/FacebookAPI.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/complete-data.html" afterPath="$PROJECT_DIR$/templates/complete-data.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,31 +44,31 @@
       <file leaf-file-name="FacebookAPI.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FacebookAPI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11">
-              <caret line="216" column="31" lean-forward="true" selection-start-line="216" selection-start-column="31" selection-end-line="216" selection-end-column="31" />
+            <state relative-caret-position="62">
+              <caret line="294" column="34" lean-forward="false" selection-start-line="294" selection-start-column="4" selection-end-line="294" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="431" column="53" lean-forward="false" selection-start-line="431" selection-start-column="53" selection-end-line="431" selection-end-column="53" />
+            <state relative-caret-position="424">
+              <caret line="453" column="103" lean-forward="false" selection-start-line="453" selection-start-column="103" selection-end-line="453" selection-end-column="103" />
               <folding>
                 <element signature="e#14#34#0" expanded="true" />
-                <element signature="e#7194#8133#0" expanded="false" />
+                <element signature="e#7305#8244#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="complete-data.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="complete-data.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="109" column="50" lean-forward="false" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
+            <state relative-caret-position="158">
+              <caret line="98" column="22" lean-forward="true" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -156,6 +158,8 @@
       <find>question-value</find>
       <find>print</find>
       <find>send_body_quick_replies</find>
+      <find>send_complete_data</find>
+      <find>send_where_to_go_quick_replies</find>
     </findStrings>
     <replaceStrings>
       <replace>question</replace>
@@ -176,9 +180,9 @@
         <option value="$PROJECT_DIR$/templates/new-symptom.html" />
         <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/config.py" />
+        <option value="$PROJECT_DIR$/templates/complete-data.html" />
         <option value="$PROJECT_DIR$/FacebookAPI.py" />
         <option value="$PROJECT_DIR$/app.py" />
-        <option value="$PROJECT_DIR$/templates/complete-data.html" />
       </list>
     </option>
   </component>
@@ -643,7 +647,7 @@
           <caret line="45" column="38" lean-forward="true" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7194#8133#0" expanded="false" />
+            <element signature="e#7305#8244#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -671,7 +675,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7194#8133#0" expanded="false" />
+            <element signature="e#7305#8244#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -807,14 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FacebookAPI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="216" column="31" lean-forward="true" selection-start-line="216" selection-start-column="31" selection-end-line="216" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -823,22 +819,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
+    <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="431" column="53" lean-forward="false" selection-start-line="431" selection-start-column="53" selection-end-line="431" selection-end-column="53" />
-          <folding>
-            <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7194#8133#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="158">
+          <caret line="98" column="22" lean-forward="true" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
+    <entry file="file://$PROJECT_DIR$/FacebookAPI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="109" column="50" lean-forward="false" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
+        <state relative-caret-position="62">
+          <caret line="294" column="34" lean-forward="false" selection-start-line="294" selection-start-column="4" selection-end-line="294" selection-end-column="34" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="453" column="103" lean-forward="false" selection-start-line="453" selection-start-column="103" selection-end-line="453" selection-end-column="103" />
+          <folding>
+            <element signature="e#14#34#0" expanded="true" />
+            <element signature="e#7305#8244#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
