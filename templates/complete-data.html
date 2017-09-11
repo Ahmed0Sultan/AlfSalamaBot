@@ -137,9 +137,12 @@
           $("form").submit(function() {
             // submit form
             $.post($("form").attr('action'), $("form").serializeArray());
-            // alert
-            alert("The request has been submitted.");
             // close window
+            MessengerExtensions.requestCloseBrowser(function success() {
+
+              }, function error(err) {
+          
+              });
             window.close();
             // return
             return false;
