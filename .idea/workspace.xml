@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FacebookAPI.py" afterPath="$PROJECT_DIR$/FacebookAPI.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/complete-data.html" afterPath="$PROJECT_DIR$/templates/complete-data.html" />
-    </list>
+    <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,8 +50,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="453" column="103" lean-forward="false" selection-start-line="453" selection-start-column="103" selection-end-line="453" selection-end-column="103" />
+            <state relative-caret-position="577">
+              <caret line="445" column="37" lean-forward="true" selection-start-line="445" selection-start-column="37" selection-end-line="445" selection-end-column="37" />
               <folding>
                 <element signature="e#14#34#0" expanded="true" />
                 <element signature="e#7305#8244#0" expanded="false" />
@@ -837,8 +833,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="453" column="103" lean-forward="false" selection-start-line="453" selection-start-column="103" selection-end-line="453" selection-end-column="103" />
+        <state relative-caret-position="577">
+          <caret line="445" column="37" lean-forward="true" selection-start-line="445" selection-start-column="37" selection-end-line="445" selection-end-column="37" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
             <element signature="e#7305#8244#0" expanded="false" />
