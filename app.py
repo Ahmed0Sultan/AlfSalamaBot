@@ -46,7 +46,8 @@ class User(db.Model):
     def __init__(self, name, username, password, email, phone, age,location):
         self.name = name
         self.username = username
-        self.set_password(password)
+        if password is not None:
+            self.set_password(password)
         self.email = email
         self.phone = phone
         self.age = age
