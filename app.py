@@ -453,10 +453,11 @@ def flowcharts():
 def completeData(user_id):
     if request.method == 'GET':
         MyData = request.args['mine']
-        if MyData == True:
+        print MyData
+        if MyData == 'True':
             user = User.query.filter_by(username=user_id).first()
             return render_template('complete-data.html',user_id=user_id,name=user.name)
-        elif MyData == False:
+        elif MyData == 'False':
             return render_template('complete-data.html', user_id=None, name=None)
     elif request.method == 'POST':
         if request.form['id'] is not None:
