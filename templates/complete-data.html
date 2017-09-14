@@ -91,6 +91,15 @@
     <div class="content rtl">
         <div class="first-question">
             <form method="post">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul class=flashes>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
 {#                <h1 class="section-heading bq-title">ادخل عضو جديد</h1>#}
                 <input type="text" name="id" value="{{ user_id }}" hidden>
                 <div class="md-form">
@@ -141,7 +150,7 @@
             MessengerExtensions.requestCloseBrowser(function success() {
 
               }, function error(err) {
-          
+
               });
             window.close();
             // return

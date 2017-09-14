@@ -29,29 +29,20 @@ login_manager.login_view = 'login'
 
 token = get_page_access_token()
 
-
-class User(db.Model):
+class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     username = db.Column(db.String(), unique=True) #also stores messenger user id
     email = db.Column(db.String(), unique=True)
     password = db.Column(db.String())
-    location = db.Column(db.String())
-    phone = db.Column(db.String(), unique=True)
-    age = db.Column(db.Integer)
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
-    health_records = relation('HealthRecord')
-
-    def __init__(self, name, username, password, email, phone, age,location):
+    def __init__(self, name, username, password, email):
         self.name = name
         self.username = username
         if password is not None:
             self.set_password(password)
         self.email = email
-        self.phone = phone
-        self.age = age
-        self.location = location
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -72,8 +63,27 @@ class User(db.Model):
         return unicode(self.id)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<Admin %r>' % self.username
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    username = db.Column(db.String(), unique=True) #stores messenger user id
+    email = db.Column(db.String(), unique=True)
+    location = db.Column(db.String())
+    phone = db.Column(db.String(), unique=True)
+    age = db.Column(db.Integer)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
+
+    health_records = relation('HealthRecord')
+
+    def __init__(self, name, username, email, phone, age,location):
+        self.name = name
+        self.username = username
+        self.email = email
+        self.phone = phone
+        self.age = age
+        self.location = location
 
 class Question(db.Model):
     ROUTE_NO = 0
@@ -263,7 +273,7 @@ def payloadProcessing(user_id,message_payload):
     if message_payload == 'Get_Started_Button':
         FBuser = FB.get_user_fb(token, user_id)
         if User.query.filter_by(username=user_id).first() is None:
-            user = User(str(FBuser.get('first_name'))+' '+str(FBuser.get('last_name')),user_id,None,None,None,None,None)
+            user = User(str(FBuser.get('first_name'))+' '+str(FBuser.get('last_name')),user_id,None,None,None,None)
             db.session.add(user)
             db.session.commit()
         msg = u" مرحبا بك يا "
@@ -273,7 +283,7 @@ def payloadProcessing(user_id,message_payload):
         FB.send_message(token, user_id,intro)
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
-        FB.send_complete_data_button(token, user_id, intro)
+        FB.send_complete_data_button(token, user_id, intro,True)
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
         # if question_id_and_route[0] == '':
@@ -301,11 +311,14 @@ def payloadProcessing(user_id,message_payload):
 
 def quickReplyProcessing(user_id,quick_reply_payload):
 
-    if quick_reply_payload == 'Complete_Data':
+    if quick_reply_payload == 'Complete_Person_Data_Request':
         FB.show_typing(token, user_id, 'typing_on')
-        FB.send_message(token, user_id, u"تم تسجيل بيانتك بنجاح")
-        FB.show_typing(token, user_id, 'typing_on')
+        intro = u"من فضلك ادخل بيانات هذا الشخص لتساعدنا على تقديم افضل خدمة"
+        FB.send_complete_data_button(token, user_id, intro,False)
         FB.send_where_to_go_quick_replies(token,user_id,u"من فضلك اختر الى اين تريد الذهاب")
+    elif quick_reply_payload == "Choose_Who_To_Diagnose":
+        FB.show_typing(token, user_id, 'typing_on')
+        FB.send_body_quick_replies(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif quick_reply_payload == "Show_Parts":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_picture(token,user_id,url_for('static', filename="assets/img/parts_1.png", _external=True))
@@ -439,21 +452,59 @@ def flowcharts():
 @app.route('/complete-data/<user_id>', methods=['GET', 'POST'])
 def completeData(user_id):
     if request.method == 'GET':
-        user = User.query.filter_by(username=user_id).first()
-        return render_template('complete-data.html',user_id=user_id,name=user.name)
+        MyData = request.args['mine']
+        if MyData == True:
+            user = User.query.filter_by(username=user_id).first()
+            return render_template('complete-data.html',user_id=user_id,name=user.name)
+        elif MyData == False:
+            return render_template('complete-data.html', user_id=None, name=None)
     elif request.method == 'POST':
-        user = User.query.filter_by(username=request.form['id']).first()
-        user.name = request.form['name']
-        user.email = request.form['email']
-        user.phone = request.form['phone']
-        user.age = request.form['age']
-        user.location = request.form['location']
-        db.session.commit()
-        FB.show_typing(token, user_id, 'typing_on')
-        FB.send_message(token,request.form['id'],u"تم تسجيل بيانتك بنجاح")
-        FB.show_typing(token, user_id, 'typing_on')
-        FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
-        return render_template('complete-data.html')
+        if request.form['id'] is not None:
+            user = User.query.filter_by(username=request.form['id']).first()
+            user.name = request.form['name']
+            user_exist = User.query.filter_by(email=request.form['email']).first()
+            if user_exist is not None and user_exist.username is not None:
+                flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
+                return redirect(url_for('completeData'))
+            elif user_exist is not None and user_exist.username is None:
+                if user_exist.phone != request.form['phone']:
+                    flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
+                    flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
+                    return redirect(url_for('completeData'))
+                elif user_exist.phone == request.form['phone']:
+                    user.name = request.form['name']
+                    user.email = request.form['email']
+                    user.phone = request.form['phone']
+                    user.age = request.form['age']
+                    user.location = request.form['location']
+                    db.session.delete(user_exist)
+                    db.session.commit()
+            user.email = request.form['email']
+            user_exist = User.query.filter_by(phone=request.form['phone']).first()
+            if user_exist is not None:
+                flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
+                return redirect(url_for('completeData'))
+            user.phone = request.form['phone']
+            user.age = request.form['age']
+            user.location = request.form['location']
+            db.session.commit()
+            FB.show_typing(token, user_id, 'typing_on')
+            FB.send_message(token,request.form['id'],u"تم تسجيل بيانتك بنجاح")
+            FB.show_typing(token, user_id, 'typing_on')
+            FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
+            return render_template('complete-data.html')
+        elif request.form['id'] is None:
+            user_exist = User.query.filter_by(email=request.form['email']).first()
+            if user_exist is not None:
+                flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
+                return redirect(url_for('completeData'))
+            user_exist = User.query.filter_by(phone=request.form['phone']).first()
+            if user_exist is not None:
+                flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
+                return redirect(url_for('completeData'))
+            user = User(request.form['name'],None,request.form['email'],request.form['phone'],request.form['age'],request.form['location'])
+            db.session.add(user)
+            db.session.commit()
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -464,9 +515,9 @@ def login():
 
     email = request.form['email']
     password = request.form['password']
-    registered_user = User.query.filter_by(email=email).first()
+    registered_user = Admin.query.filter_by(email=email).first()
     if registered_user is None:
-        flash('Username is invalid', 'error')
+        flash('Email is invalid', 'error')
         return redirect(url_for('login'))
     if not registered_user.check_password(password):
         flash('Password is invalid', 'error')

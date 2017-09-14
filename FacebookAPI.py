@@ -74,7 +74,7 @@ def send_picture(token, user_id, imageUrl, title="", subtitle=""):
     if r.status_code != requests.codes.ok:
         print r.text
 
-def send_complete_data_button(token, user_id, intro):
+def send_complete_data_button(token, user_id, intro,MyData= True):
     data = {"recipient": {"id": user_id},
             "message": {
                 "attachment": {
@@ -84,7 +84,7 @@ def send_complete_data_button(token, user_id, intro):
                         "text": intro,
                         "buttons":[{
                             "type":"web_url",
-                            "url":"https://alfsalama.herokuapp.com/complete-data/"+str(user_id),
+                            "url":"https://alfsalama.herokuapp.com/complete-data/"+str(user_id) + "?mine="+ str(MyData),
                             "title": u"استكمال البيانات"
                           }]
                     }
@@ -296,8 +296,36 @@ def send_where_to_go_quick_replies(token, user_id, intro):
 
     quickRepliesOptions = [
         {"content_type": "text",
-         "title": "استشارة",
+         "title": "تشخيص",
+         "payload":'Choose_Who_To_Diagnose'
+         }
+    ]
+    data = json.dumps({
+        "recipient": {"id": user_id},
+        "message": {
+            "text": intro,
+            "quick_replies": quickRepliesOptions
+        }
+    })
+    data = data.encode('utf-8')
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=data,
+                      headers={'Content-type': 'application/json'})
+
+    if r.status_code != requests.codes.ok:
+        print r.text
+
+def send_whose_diagnoses(token, user_id, intro):
+
+    quickRepliesOptions = [
+        {"content_type": "text",
+         "title": "هذا التشخيص لى",
          "payload":'Show_Parts'
+         },
+        {"content_type": "text",
+         "title": "هذا التشخيص لشخص اخر",
+         "payload": 'Complete_Person_Data'
          }
     ]
     data = json.dumps({
