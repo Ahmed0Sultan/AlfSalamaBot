@@ -573,7 +573,7 @@ def logout():
 
 @login_manager.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return Admin.query.get(int(id))
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
