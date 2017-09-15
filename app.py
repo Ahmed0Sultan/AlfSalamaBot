@@ -286,7 +286,7 @@ def payloadProcessing(user_id,message_payload):
         FB.send_complete_data_button(token, user_id, intro,True)
     elif message_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
-        FB.send_body_quick_replies(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
+        FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
         # if question_id_and_route[0] == '':
@@ -318,10 +318,10 @@ def quickReplyProcessing(user_id,quick_reply_payload):
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"من فضلك ادخل بيانات هذا الشخص لتساعدنا على تقديم افضل خدمة"
         FB.send_complete_data_button(token, user_id, intro,False)
-        FB.send_whose_diagnoses(token,user_id,u"من فضلك اختر الى اين تريد الذهاب")
+        FB.send_where_to_go_quick_replies(token,user_id,u"من فضلك اختر الى اين تريد الذهاب")
     elif quick_reply_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
-        FB.send_body_quick_replies(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
+        FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif quick_reply_payload == "Show_Parts":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_picture(token,user_id,url_for('static', filename="assets/img/parts_1.png", _external=True))
