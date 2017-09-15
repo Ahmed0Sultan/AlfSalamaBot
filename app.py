@@ -18,10 +18,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# base_path = os.path.dirname(__file__)
+base_path = os.path.dirname(__file__)
 image_folder = 'static/assets/img/parts/'
-# UPLOAD_FOLDER = base_path + image_folder
-UPLOAD_FOLDER = image_folder
+UPLOAD_FOLDER = base_path + image_folder
+# UPLOAD_FOLDER = image_folder
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
