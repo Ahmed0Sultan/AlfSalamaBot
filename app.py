@@ -195,7 +195,7 @@ def parts_slicer(parts):
                     }
                     parts_list.append(dict_list)
                 parts_dict['part_list_'+str(i)] = parts_list
-    remaining = parts_num - num_of_iterates
+    remaining = parts_num - (num_of_iterates*9)
     parts_list = []
     for l in range(remaining):
         print 'Number is '+ str((9 * num_of_iterates) + l)
