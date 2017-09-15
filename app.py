@@ -195,6 +195,7 @@ def parts_slicer(parts):
     parts_list = []
     for l in range(remaining):
         part = parts[(10 * num_of_iterates) + l]
+        print 'Image Url is ' + str(part.image_url)
         dict_list = {
             "title": part.name,
             "image_url": url_for('static', filename=part.image_url, _external=True),
@@ -475,11 +476,12 @@ def new_body_part():
         print image
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
+            image_path = 'assets/img/'+ str(filename)
             print filename
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filename = image_folder + filename
             print filename
-            part = Part(name,filename)
+            part = Part(name,image_path)
             db.session.add(part)
             db.session.commit()
             return render_template('new-body-part.html')
