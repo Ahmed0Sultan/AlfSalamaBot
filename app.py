@@ -499,11 +499,11 @@ def completeData(user_id):
             return render_template('complete-data.html', user_id=user_id, name=user.name)
         elif request.form['id'] == '':
             user_exist = User.query.filter_by(email=request.form['email']).first()
-            if user_exist is not None:
+            if user_exist is None:
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
                 return render_template('complete-data.html', user_id='', name='')
             user_exist = User.query.filter_by(phone=request.form['phone']).first()
-            if user_exist is not None:
+            if user_exist is  None:
                 flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
                 return render_template('complete-data.html', user_id='', name='')
             user = User(request.form['name'],None,request.form['email'],request.form['phone'],request.form['age'],request.form['location'])
