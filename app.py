@@ -415,7 +415,7 @@ def new_body_part():
         print name
         print request.form
         print request.files
-        image = request.form['image']
+        image = request.files['image']
         print image
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
