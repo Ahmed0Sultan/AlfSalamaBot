@@ -207,7 +207,9 @@ def parts_slicer(parts):
                 ]
             }
             parts_list.append(dict_list)
+        print 'part_list_' + str(num_of_iterates + 1)
         parts_dict['part_list_' + str(num_of_iterates + 1)] = parts_list
+        print parts_dict
     return parts_dict , num_of_iterates
 
 @app.route('/', methods=['GET'])
