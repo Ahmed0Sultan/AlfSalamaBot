@@ -49,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="462" column="66" lean-forward="false" selection-start-line="462" selection-start-column="66" selection-end-line="462" selection-end-column="66" />
+            <state relative-caret-position="257">
+              <caret line="468" column="16" lean-forward="false" selection-start-line="468" selection-start-column="16" selection-end-line="468" selection-end-column="25" />
               <folding>
                 <element signature="e#14#34#0" expanded="true" />
                 <element signature="e#7781#8720#0" expanded="false" />
@@ -62,7 +62,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="complete-data.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="complete-data.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="430">
@@ -848,22 +848,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="462" column="66" lean-forward="false" selection-start-line="462" selection-start-column="66" selection-end-line="462" selection-end-column="66" />
-          <folding>
-            <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7781#8720#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="430">
           <caret line="103" column="59" lean-forward="true" selection-start-line="103" selection-start-column="59" selection-end-line="103" selection-end-column="59" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="468" column="16" lean-forward="false" selection-start-line="468" selection-start-column="16" selection-end-line="468" selection-end-column="25" />
+          <folding>
+            <element signature="e#14#34#0" expanded="true" />
+            <element signature="e#7781#8720#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

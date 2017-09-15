@@ -462,10 +462,11 @@ def completeData(user_id):
         elif MyData == 'False':
             return render_template('complete-data.html', user_id='', name='')
     elif request.method == 'POST':
-        print request
+        print request.form
         if request.form['id'] is not None:
             user = User.query.filter_by(username=request.form['id']).first()
-            user.name = request.form['name']
+            if request.form['name'] is not None:
+                user.name = request.form['name']
             user_exist = User.query.filter_by(email=request.form['email']).first()
             if user_exist is not None and user_exist.username is not None:
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
