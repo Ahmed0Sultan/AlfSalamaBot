@@ -158,9 +158,9 @@ class HealthRecord(db.Model):
 
 db.create_all()
 
-# admin = User('Admin','admin','admin','admin@admin.com',None,None)
-# db.session.add(admin)
-# db.session.commit()
+admin = Admin('Admin','admin','admin','admin@admin.com')
+db.session.add(admin)
+db.session.commit()
 # q = Question.query.filter_by(id=1).first()
 # print (q.childs)
 # exit(0)
