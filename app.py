@@ -413,7 +413,8 @@ def new_body_part():
     if request.method == 'POST':
         name = request.form['body-part']
         print name
-        print request
+        print request.form
+        print request.files
         image = request.files['image']
         print image
         if image and allowed_file(image.filename):
