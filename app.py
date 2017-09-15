@@ -386,7 +386,7 @@ def quickReplyProcessing(user_id,quick_reply_payload):
         # FB.send_message(token,user_id,u"من فضلك اختر العضو الذى تشكو منه")
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_body_parts(token, user_id,parts_list)
-        if (list_part_number + 1) < num_of_iterates
+        if (list_part_number + 1) < num_of_iterates:
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_more_body_parts_quick_replies(token, user_id,u"من فضلك اختر العضو الذى تشكو منه",list_part_number+1)
     elif quick_reply_payload.__contains__('body_part_'):
