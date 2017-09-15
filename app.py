@@ -413,10 +413,13 @@ def new_body_part():
     if request.method == 'POST':
         name = request.form['body-part']
         image = request.files['image']
+        print image
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
+            print filename
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filename = image_folder + filename
+            print filename
             part = Part(name,filename)
             db.session.add(part)
             db.session.commit()
