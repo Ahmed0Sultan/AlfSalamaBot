@@ -173,7 +173,7 @@ def parts_slicer(parts):
     num_of_iterates = 0
     if parts_num > 10:
         num_of_iterates = int(math.floor(parts_num / 10))
-        if parts_num > 0:
+        if parts_num > 10:
             for i in range(num_of_iterates):
                 parts_list = []
                 for a in range(11):
