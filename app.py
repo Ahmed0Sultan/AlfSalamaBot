@@ -169,6 +169,8 @@ db.create_all()
 
 def parts_slicer(parts):
     parts_num = len(parts)
+    print parts_num
+    print len(parts_num)
     parts_dict = {}
     num_of_iterates = 0
     if parts_num > 10:
