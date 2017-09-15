@@ -460,8 +460,9 @@ def completeData(user_id):
             user = User.query.filter_by(username=user_id).first()
             return render_template('complete-data.html',user_id=user_id,name=user.name)
         elif MyData == 'False':
-            return render_template('complete-data.html', user_id=None, name=None)
+            return render_template('complete-data.html', user_id='', name='')
     elif request.method == 'POST':
+        print request
         if request.form['id'] is not None:
             user = User.query.filter_by(username=request.form['id']).first()
             user.name = request.form['name']
