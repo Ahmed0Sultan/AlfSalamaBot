@@ -325,7 +325,7 @@ def send_whose_diagnoses(token, user_id, intro):
          },
         {"content_type": "text",
          "title": "هذا التشخيص لشخص اخر",
-         "payload": 'Complete_Person_Data'
+         "payload": 'Complete_Person_Data_Request'
          }
     ]
     data = json.dumps({
