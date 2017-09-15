@@ -496,7 +496,7 @@ def completeData(user_id):
             FB.send_message(token,request.form['id'],u"تم تسجيل بياناتك بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
-            return render_template('complete-data.html', user_id=user_id, name=user.name)
+            return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
         elif request.form['id'] == '':
             user_exist = User.query.filter_by(email=request.form['email']).first()
             if user_exist is not None:
@@ -509,7 +509,7 @@ def completeData(user_id):
             user = User(request.form['name'],None,request.form['email'],request.form['phone'],request.form['age'],request.form['location'])
             db.session.add(user)
             db.session.commit()
-            return render_template('complete-data.html', user_id='', name='')
+            return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
