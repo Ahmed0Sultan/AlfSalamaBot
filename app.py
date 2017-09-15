@@ -1,6 +1,6 @@
 # coding=utf8
 import datetime,json
-import sys, traceback
+import sys, traceback,os
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import false
 import FacebookAPI as FB
@@ -17,9 +17,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+base_path = os.path.dirname(os.path.abspath(__file__))
+image_folder = '/static/assets/img/parts/'
+UPLOAD_FOLDER = base_path + image_folder
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bot.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = false
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = 'super-secret'
 db = SQLAlchemy(app)
 
@@ -28,6 +34,10 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 token = get_page_access_token()
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -109,23 +119,27 @@ class Question(db.Model):
 class Part(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), unique=True)
+    image_url = db.Column(db.String())
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
     symptoms = relation('Symptom')
 
-    def __init__(self, name):
+    def __init__(self, name,image_url):
         self.name = name
+        self.image_url = image_url
 
 
 # الاعراض الخاصه بالعضو
 class Symptom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), unique=True)
+    description = db.Column(db.String())
     part_id = db.Column(db.Integer, db.ForeignKey('part.id'))
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
-    def __init__(self, name, part_id):
+    def __init__(self, name,description, part_id):
         self.name = name
+        self.description = description
         self.part_id = part_id
 
 
@@ -487,7 +501,7 @@ def completeData(user_id):
                     FB.show_typing(token, user_id, 'typing_on')
                     FB.send_message(token, user_id, u"تم تسجيل بياناتك بنجاح")
                     FB.show_typing(token, user_id, 'typing_on')
-                    FB.send_where_to_go_quick_replies(token, request.form['id'], u"من فضلك اختر الى اين تريد الذهاب")
+                    FB.send_where_to_go_quick_replies(token, user_id, u"من فضلك اختر الى اين تريد الذهاب")
                     return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
             user.email = request.form['email']
             user_exist = User.query.filter_by(phone=request.form['phone']).first()
@@ -502,7 +516,7 @@ def completeData(user_id):
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_message(token,user_id,u"تم تسجيل البيانات بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
-            FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
+            FB.send_where_to_go_quick_replies(token,user_id,u"من فضلك اختر الى اين تريد الذهاب")
             return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
         elif request.form['id'] == '':
             user_exist = User.query.filter_by(email=request.form['email']).first()
@@ -522,7 +536,7 @@ def completeData(user_id):
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_message(token, user_id, u"تم تسجيل البيانات بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
-            FB.send_where_to_go_quick_replies(token, request.form['id'], u"من فضلك اختر الى اين تريد الذهاب")
+            FB.send_where_to_go_quick_replies(token, user_id, u"من فضلك اختر الى اين تريد الذهاب")
             return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
 
 @app.route('/login', methods=['GET', 'POST'])

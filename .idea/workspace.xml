@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/new-body-part.html" afterPath="$PROJECT_DIR$/templates/new-body-part.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,15 +50,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="487" column="50" lean-forward="false" selection-start-line="487" selection-start-column="50" selection-end-line="487" selection-end-column="50" />
+            <state relative-caret-position="289">
+              <caret line="127" column="24" lean-forward="true" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
               <folding>
                 <element signature="e#14#34#0" expanded="true" />
-                <element signature="e#7781#8720#0" expanded="false" />
+                <element signature="e#8323#9262#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="new-body-part.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/new-body-part.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="274">
-              <caret line="144" column="15" lean-forward="true" selection-start-line="144" selection-start-column="15" selection-end-line="144" selection-end-column="15" />
+              <caret line="144" column="15" lean-forward="false" selection-start-line="144" selection-start-column="15" selection-end-line="144" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -101,7 +112,7 @@
         <entry file="file://$PROJECT_DIR$/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="56" column="21" lean-forward="true" selection-start-line="48" selection-start-column="8" selection-end-line="56" selection-end-column="21" />
+              <caret line="56" column="21" lean-forward="false" selection-start-line="48" selection-start-column="8" selection-end-line="56" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -173,7 +184,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/templates/new-body-part.html" />
         <option value="$PROJECT_DIR$/templates/question.html" />
         <option value="$PROJECT_DIR$/templates/flowchart.html" />
         <option value="$PROJECT_DIR$/templates/flowcharts.html" />
@@ -184,6 +194,7 @@
         <option value="$PROJECT_DIR$/FacebookAPI.py" />
         <option value="$PROJECT_DIR$/templates/complete-data.html" />
         <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/templates/new-body-part.html" />
       </list>
     </option>
   </component>
@@ -255,6 +266,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AlfSalamaBot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AlfSalamaBot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -668,7 +701,7 @@
           <caret line="45" column="38" lean-forward="true" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7781#8720#0" expanded="false" />
+            <element signature="e#8323#9262#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -696,7 +729,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7781#8720#0" expanded="false" />
+            <element signature="e#8323#9262#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -760,13 +793,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="31" lean-forward="false" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/new-body-part.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="88" column="20" lean-forward="false" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="106" />
         </state>
       </provider>
     </entry>
@@ -835,7 +861,7 @@
     <entry file="file://$PROJECT_DIR$/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="56" column="21" lean-forward="true" selection-start-line="48" selection-start-column="8" selection-end-line="56" selection-end-column="21" />
+          <caret line="56" column="21" lean-forward="false" selection-start-line="48" selection-start-column="8" selection-end-line="56" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -851,19 +877,27 @@
     <entry file="file://$PROJECT_DIR$/templates/complete-data.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="274">
-          <caret line="144" column="15" lean-forward="true" selection-start-line="144" selection-start-column="15" selection-end-line="144" selection-end-column="15" />
+          <caret line="144" column="15" lean-forward="false" selection-start-line="144" selection-start-column="15" selection-end-line="144" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="487" column="50" lean-forward="false" selection-start-line="487" selection-start-column="50" selection-end-line="487" selection-end-column="50" />
+        <state relative-caret-position="289">
+          <caret line="127" column="24" lean-forward="true" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
-            <element signature="e#7781#8720#0" expanded="false" />
+            <element signature="e#8323#9262#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/new-body-part.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
