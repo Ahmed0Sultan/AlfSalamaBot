@@ -284,6 +284,9 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
         FB.send_complete_data_button(token, user_id, intro,True)
+    elif message_payload == "Choose_Who_To_Diagnose":
+        FB.show_typing(token, user_id, 'typing_on')
+        FB.send_body_quick_replies(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
         # if question_id_and_route[0] == '':
