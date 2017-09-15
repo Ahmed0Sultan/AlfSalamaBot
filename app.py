@@ -463,10 +463,9 @@ def completeData(user_id):
             return render_template('complete-data.html', user_id='', name='')
     elif request.method == 'POST':
         print request.form
-        if request.form['id'] is not None:
+        if request.form['id'] != '':
             user = User.query.filter_by(username=request.form['id']).first()
-            if request.form['name'] is not None:
-                user.name = request.form['name']
+            user.name = request.form['name']
             user_exist = User.query.filter_by(email=request.form['email']).first()
             if user_exist is not None and user_exist.username is not None:
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
@@ -498,7 +497,7 @@ def completeData(user_id):
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
             return render_template('complete-data.html')
-        elif request.form['id'] is None:
+        elif request.form['id'] == '':
             user_exist = User.query.filter_by(email=request.form['email']).first()
             if user_exist is not None:
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
