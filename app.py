@@ -485,7 +485,7 @@ def completeData(user_id):
                     db.session.commit()
                     print 'useer2 ' + str(user_id)
                     FB.show_typing(token, user_id, 'typing_on')
-                    FB.send_message(token, request.form['id'], u"تم تسجيل بياناتك بنجاح")
+                    FB.send_message(token, user_id, u"تم تسجيل بياناتك بنجاح")
                     FB.show_typing(token, user_id, 'typing_on')
                     FB.send_where_to_go_quick_replies(token, request.form['id'], u"من فضلك اختر الى اين تريد الذهاب")
                     return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
@@ -520,7 +520,7 @@ def completeData(user_id):
             db.session.commit()
             print 'useer3 ' + str(user_id)
             FB.show_typing(token, user_id, 'typing_on')
-            FB.send_message(token, request.form['id'], u"تم تسجيل البيانات بنجاح")
+            FB.send_message(token, user_id, u"تم تسجيل البيانات بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_where_to_go_quick_replies(token, request.form['id'], u"من فضلك اختر الى اين تريد الذهاب")
             return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
