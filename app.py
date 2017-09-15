@@ -215,8 +215,8 @@ def parts_slicer(parts):
         parts_list.append(dict_list)
     if num_of_iterates == 0:
         num_of_iterates = -1
-    print 'part_list_' + str(num_of_iterates + 1)
-    parts_dict['part_list_' + str(num_of_iterates + 1)] = parts_list
+    print 'part_list_' + str(num_of_iterates)
+    parts_dict['part_list_' + str(num_of_iterates)] = parts_list
     if num_of_iterates == -1:
         num_of_iterates = 0
     print parts_dict
