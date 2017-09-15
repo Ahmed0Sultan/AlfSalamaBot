@@ -179,33 +179,31 @@ def send_intro_screenshots(token, user_id):
     if r.status_code != requests.codes.ok:
         print r.text
 
+def send_body_parts(token, user_id,parts):
 
-def send_body_quick_replies(token, user_id, intro):
-    body_key = 'body_part_'
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=json.dumps({
+                          "recipient": {"id": user_id},
+                          "message": {
+                              "attachment": {
+                                  "type": "template",
+                                  "payload": {
+                                      "template_type": "generic",
+                                      "elements": parts
+                                  }
+                              }
+                          }
+                      }),
+                      headers={'Content-type': 'application/json'})
+    if r.status_code != requests.codes.ok:
+        print r.text
+
+def send_more_body_parts_quick_replies(token, user_id, intro,list_number):
     quickRepliesOptions = [
         {"content_type": "text",
-         "title": "1",
-         "payload": body_key + '1'
-         },
-        {"content_type": "text",
-         "title": "2",
-         "payload": body_key + '2'
-         },
-        {"content_type": "text",
-         "title": "3",
-         "payload": body_key + '3'
-         },
-        {"content_type": "text",
-         "title": "4",
-         "payload": body_key + '4'
-         },
-        {"content_type": "text",
-         "title": "5",
-         "payload": body_key + '5'
-         },
-        {"content_type": "text",
-         "title": "6",
-         "payload": body_key + '6'
+         "title": "المزيد",
+         "payload": 'Show_Parts_' + str(list_number)
          }
     ]
     data = json.dumps({
@@ -321,7 +319,7 @@ def send_whose_diagnoses(token, user_id, intro):
     quickRepliesOptions = [
         {"content_type": "text",
          "title": "هذا التشخيص لى",
-         "payload":'Show_Parts'
+         "payload":'Show_Parts_0'
          },
         {"content_type": "text",
          "title": "هذا التشخيص لشخص اخر",

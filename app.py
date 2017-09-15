@@ -1,5 +1,5 @@
 # coding=utf8
-import datetime,json
+import datetime,json,math
 import sys, traceback,os
 from sqlalchemy.orm import relation
 from sqlalchemy.sql.expression import false
@@ -167,13 +167,53 @@ db.create_all()
 # print (q.childs)
 # exit(0)
 
+def parts_slicer(parts):
+    parts_num = len(parts)
+    if parts_num > 0:
+        num_of_iterates = math.floor(parts_num / 10)
+        parts_dict = {}
+        if parts_num > 0:
+            for i in range(num_of_iterates):
+                parts_list = []
+                for a in range(11):
+                    part = parts[(10*i)+ a]
+                    dict_list = {
+                        "title": part.name,
+                        "image_url": url_for('static', filename=part.image_url,_external=True),
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "اختر هذا الجزء",
+                                "payload": "Part_Id_" + str(part.id)
+                            }
+                        ]
+                    }
+                    parts_list.append(dict_list)
+                parts_dict['part_list_'+str(i)] = parts_list
+        remaining = parts_num - num_of_iterates
+        parts_list = []
+        for l in range(remaining):
+            part = parts[(10 * num_of_iterates) + l]
+            dict_list = {
+                "title": part.name,
+                "image_url": url_for('static', filename=part.image_url, _external=True),
+                "buttons": [
+                    {
+                        "type": "postback",
+                        "title": "اختر هذا الجزء",
+                        "payload": "Part_Id_" + str(part.id)
+                    }
+                ]
+            }
+            parts_list.append(dict_list)
+        parts_dict['part_list_' + str(num_of_iterates + 1)] = parts_list
+    return parts_dict , num_of_iterates
 
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
     # the 'hub.challenge' value it receives in the query arguments
     if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-        print 'Heeeeeeeeeeeeeeeereeeeeeeeeee'
         if not request.args.get("hub.verify_token") == get_verify_token():
             return "Verification token mismatch", 403
         return request.args["hub.challenge"], 200
@@ -337,11 +377,18 @@ def quickReplyProcessing(user_id,quick_reply_payload):
     elif quick_reply_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
-    elif quick_reply_payload == "Show_Parts":
+    elif quick_reply_payload.__contains__("Show_Parts_"):
+        list_part_number = int(quick_reply_payload.replace('Show_Parts_', ''))
+        parts = Part.query.all()
+        parts_dict, num_of_iterates = parts_slicer(parts)
+        parts_list = parts_dict['part_list_'+str(list_part_number)]
+        # FB.show_typing(token, user_id, 'typing_on')
+        # FB.send_message(token,user_id,u"من فضلك اختر العضو الذى تشكو منه")
         FB.show_typing(token, user_id, 'typing_on')
-        FB.send_picture(token,user_id,url_for('static', filename="assets/img/parts_1.png", _external=True))
-        FB.show_typing(token, user_id, 'typing_on')
-        FB.send_body_quick_replies(token, user_id, u"من فضلك اختر رقم العضو الذى تشكو منه")
+        FB.send_body_parts(token, user_id,parts_list)
+        if (list_part_number + 1) < num_of_iterates
+            FB.show_typing(token, user_id, 'typing_on')
+            FB.send_more_body_parts_quick_replies(token, user_id,u"من فضلك اختر العضو الذى تشكو منه",list_part_number+1)
     elif quick_reply_payload.__contains__('body_part_'):
         body_part = int(quick_reply_payload.replace('body_part_',''))
         symptoms = Symptom.query.filter_by(part_id=body_part).all()
