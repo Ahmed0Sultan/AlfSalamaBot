@@ -469,12 +469,12 @@ def completeData(user_id):
             user_exist = User.query.filter_by(email=request.form['email']).first()
             if user_exist is not None and user_exist.username is not None:
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
-                return redirect(url_for('completeData'))
+                return render_template('complete-data.html', user_id=user_id, name=user.name)
             elif user_exist is not None and user_exist.username is None:
                 if user_exist.phone != request.form['phone']:
                     flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
                     flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
-                    return redirect(url_for('completeData'))
+                    return render_template('complete-data.html', user_id=user_id, name=user.name)
                 elif user_exist.phone == request.form['phone']:
                     user.name = request.form['name']
                     user.email = request.form['email']
@@ -487,7 +487,7 @@ def completeData(user_id):
             user_exist = User.query.filter_by(phone=request.form['phone']).first()
             if user_exist is not None:
                 flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
-                return redirect(url_for('completeData'))
+                return render_template('complete-data.html', user_id=user_id, name=user.name)
             user.phone = request.form['phone']
             user.age = request.form['age']
             user.location = request.form['location']
@@ -496,19 +496,20 @@ def completeData(user_id):
             FB.send_message(token,request.form['id'],u"تم تسجيل بياناتك بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_where_to_go_quick_replies(token,request.form['id'],u"من فضلك اختر الى اين تريد الذهاب")
-            return render_template('complete-data.html')
+            return render_template('complete-data.html', user_id=user_id, name=user.name)
         elif request.form['id'] == '':
             user_exist = User.query.filter_by(email=request.form['email']).first()
             if user_exist is not None:
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
-                return redirect(url_for('completeData'))
+                return render_template('complete-data.html', user_id='', name='')
             user_exist = User.query.filter_by(phone=request.form['phone']).first()
             if user_exist is not None:
                 flash(u'هذا الرقم تم استخدامه من قبل!!', 'error')
-                return redirect(url_for('completeData'))
+                return render_template('complete-data.html', user_id='', name='')
             user = User(request.form['name'],None,request.form['email'],request.form['phone'],request.form['age'],request.form['location'])
             db.session.add(user)
             db.session.commit()
+            return render_template('complete-data.html', user_id='', name='')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
