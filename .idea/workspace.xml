@@ -52,11 +52,11 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="478" column="43" lean-forward="false" selection-start-line="478" selection-start-column="43" selection-end-line="478" selection-end-column="43" />
+            <state relative-caret-position="493">
+              <caret line="196" column="59" lean-forward="false" selection-start-line="196" selection-start-column="59" selection-end-line="196" selection-end-column="59" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
-                <element signature="e#10197#11136#0" expanded="false" />
+                <element signature="e#10231#11170#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -733,7 +733,7 @@
           <caret line="45" column="38" lean-forward="true" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
-            <element signature="e#10197#11136#0" expanded="false" />
+            <element signature="e#10231#11170#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -761,7 +761,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
-            <element signature="e#10197#11136#0" expanded="false" />
+            <element signature="e#10231#11170#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -924,11 +924,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="478" column="43" lean-forward="false" selection-start-line="478" selection-start-column="43" selection-end-line="478" selection-end-column="43" />
+        <state relative-caret-position="493">
+          <caret line="196" column="59" lean-forward="false" selection-start-line="196" selection-start-column="59" selection-end-line="196" selection-end-column="59" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
-            <element signature="e#10197#11136#0" expanded="false" />
+            <element signature="e#10231#11170#0" expanded="false" />
           </folding>
         </state>
       </provider>

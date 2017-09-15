@@ -120,7 +120,7 @@ class Question(db.Model):
 # body parts
 class Part(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(), unique=True)
+    name = db.Column(db.String())
     image_url = db.Column(db.String())
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
 
@@ -134,7 +134,7 @@ class Part(db.Model):
 # الاعراض الخاصه بالعضو
 class Symptom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(), unique=True)
+    name = db.Column(db.String())
     description = db.Column(db.String())
     part_id = db.Column(db.Integer, db.ForeignKey('part.id'))
     created_at = db.Column(db.TIMESTAMP, default=datetime.datetime.utcnow)
@@ -194,6 +194,7 @@ def parts_slicer(parts):
     remaining = parts_num - num_of_iterates
     parts_list = []
     for l in range(remaining):
+        print 'Number is '+ str((10 * num_of_iterates) + l)
         part = parts[(10 * num_of_iterates) + l]
         print 'Image Url is ' + str(part.image_url)
         dict_list = {
@@ -351,6 +352,9 @@ def payloadProcessing(user_id,message_payload):
     elif message_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
+    elif message_payload.__contains__('Part_Id_'):
+        body_part_num = int(message_payload.replace('Part_Id_', ''))
+
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
         # if question_id_and_route[0] == '':
