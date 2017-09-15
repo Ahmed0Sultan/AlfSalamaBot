@@ -18,7 +18,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-base_path = os.path.dirname(os.path.abspath(__file__))
+base_path = os.path.dirname(__file__)
 image_folder = '/static/assets/img/parts/'
 UPLOAD_FOLDER = base_path + image_folder
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
