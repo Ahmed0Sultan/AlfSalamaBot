@@ -476,7 +476,7 @@ def new_body_part():
         print image
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
-            image_path = 'assets/img/'+ str(filename)
+            image_path = 'assets/img/parts/'+ str(filename)
             print filename
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filename = image_folder + filename
