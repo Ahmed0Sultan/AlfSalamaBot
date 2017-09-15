@@ -170,7 +170,7 @@ db.create_all()
 def parts_slicer(parts):
     parts_num = len(parts)
     if parts_num > 0:
-        num_of_iterates = math.floor(parts_num / 10)
+        num_of_iterates = int(math.floor(parts_num / 10))
         parts_dict = {}
         if parts_num > 0:
             for i in range(num_of_iterates):
