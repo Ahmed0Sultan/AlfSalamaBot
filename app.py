@@ -8,6 +8,7 @@ from config import *
 from flask_login import LoginManager
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -158,9 +159,9 @@ class HealthRecord(db.Model):
 
 db.create_all()
 
-admin = Admin('Admin','admin','admin','admin@admin.com')
-db.session.add(admin)
-db.session.commit()
+# admin = Admin('Admin','admin','admin','admin@admin.com')
+# db.session.add(admin)
+# db.session.commit()
 # q = Question.query.filter_by(id=1).first()
 # print (q.childs)
 # exit(0)
@@ -411,10 +412,15 @@ def new_question():
 def new_body_part():
     if request.method == 'POST':
         name = request.form['body-part']
-        part = Part(name)
-        db.session.add(part)
-        db.session.commit()
-        return render_template('new-body-part.html')
+        image = request.files['image']
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            filename = image_folder + filename
+            part = Part(name,filename)
+            db.session.add(part)
+            db.session.commit()
+            return render_template('new-body-part.html')
     elif request.method == 'GET':
         return render_template('new-body-part.html')
     return "FAILED", 400
@@ -425,7 +431,8 @@ def new_symptom():
     if request.method == 'POST':
         part_id = request.form['select-symptom']
         name = request.form['symptom']
-        symptom = Symptom(name,part_id)
+        description = request.form['description']
+        symptom = Symptom(name,description,part_id)
         db.session.add(symptom)
         db.session.commit()
         parts = Part.query.all()
