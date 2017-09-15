@@ -147,11 +147,6 @@
             // submit form
             $.post($("form").attr('action'), $("form").serializeArray());
             // close window
-            MessengerExtensions.requestCloseBrowser(function success() {
-
-              }, function error(err) {
-
-              });
             window.close();
             // return
             return false;

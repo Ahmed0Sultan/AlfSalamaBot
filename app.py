@@ -499,7 +499,9 @@ def completeData(user_id):
             return u'تم التسجيل بنجاح يمكنك الأن اغلاق هذه الصفحة'
         elif request.form['id'] == '':
             user_exist = User.query.filter_by(email=request.form['email']).first()
+            print user_exist
             if user_exist is not None:
+                print user_exist.email
                 flash(u'هذا البريد الالكتروني تم استخدامه من قبل!!', 'error')
                 return render_template('complete-data.html', user_id='', name='')
             user_exist = User.query.filter_by(phone=request.form['phone']).first()
