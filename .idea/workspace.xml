@@ -49,10 +49,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
+            <state relative-caret-position="164">
               <caret line="417" column="29" lean-forward="false" selection-start-line="417" selection-start-column="24" selection-end-line="417" selection-end-column="29" />
               <folding>
                 <element signature="e#14#34#0" expanded="true" />
@@ -62,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new-body-part.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="new-body-part.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/new-body-part.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="104" column="39" lean-forward="false" selection-start-line="104" selection-start-column="41" selection-end-line="107" selection-end-column="0" />
+            <state relative-caret-position="221">
+              <caret line="89" column="10" lean-forward="true" selection-start-line="89" selection-start-column="10" selection-end-line="89" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -195,8 +195,8 @@
         <option value="$PROJECT_DIR$/FacebookAPI.py" />
         <option value="$PROJECT_DIR$/templates/complete-data.html" />
         <option value="$PROJECT_DIR$/templates/new-symptom.html" />
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/templates/new-body-part.html" />
+        <option value="$PROJECT_DIR$/app.py" />
       </list>
     </option>
   </component>
@@ -884,22 +884,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/new-body-part.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="89" column="10" lean-forward="true" selection-start-line="89" selection-start-column="10" selection-end-line="89" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
+        <state relative-caret-position="164">
           <caret line="417" column="29" lean-forward="false" selection-start-line="417" selection-start-column="24" selection-end-line="417" selection-end-column="29" />
           <folding>
             <element signature="e#14#34#0" expanded="true" />
             <element signature="e#8357#9296#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/new-body-part.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="104" column="39" lean-forward="false" selection-start-line="104" selection-start-column="41" selection-end-line="107" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
