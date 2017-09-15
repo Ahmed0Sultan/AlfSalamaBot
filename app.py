@@ -483,6 +483,7 @@ def completeData(user_id):
                     user.location = request.form['location']
                     db.session.delete(user_exist)
                     db.session.commit()
+                    print 'useer2 ' + str(user_id)
                     FB.show_typing(token, user_id, 'typing_on')
                     FB.send_message(token, request.form['id'], u"تم تسجيل بياناتك بنجاح")
                     FB.show_typing(token, user_id, 'typing_on')
@@ -497,6 +498,7 @@ def completeData(user_id):
             user.age = request.form['age']
             user.location = request.form['location']
             db.session.commit()
+            print 'useer1 '+ str(user_id)
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_message(token,user_id,u"تم تسجيل البيانات بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
@@ -516,6 +518,7 @@ def completeData(user_id):
             user = User(request.form['name'],None,request.form['email'],request.form['phone'],request.form['age'],request.form['location'])
             db.session.add(user)
             db.session.commit()
+            print 'useer3 ' + str(user_id)
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_message(token, request.form['id'], u"تم تسجيل البيانات بنجاح")
             FB.show_typing(token, user_id, 'typing_on')
