@@ -175,13 +175,13 @@ def parts_slicer(parts):
     num_of_iterates = 0
     if parts_num > 9:
         print 'Here'
-        num_of_iterates = int(math.floor(parts_num / 10))
+        num_of_iterates = int(math.floor(parts_num / 9))
         if parts_num > 9:
             print 'Here again'
             for i in range(num_of_iterates):
                 parts_list = []
-                for a in range(11):
-                    part = parts[(10*i)+ a]
+                for a in range(9):
+                    part = parts[(9*i)+ a]
                     dict_list = {
                         "title": part.name,
                         "image_url": url_for('static', filename=part.image_url,_external=True),
@@ -198,8 +198,8 @@ def parts_slicer(parts):
     remaining = parts_num - num_of_iterates
     parts_list = []
     for l in range(remaining):
-        print 'Number is '+ str((10 * num_of_iterates) + l)
-        part = parts[(10 * num_of_iterates) + l]
+        print 'Number is '+ str((9 * num_of_iterates) + l)
+        part = parts[(9 * num_of_iterates) + l]
         print 'Image Url is ' + str(part.image_url)
         dict_list = {
             "title": part.name,
