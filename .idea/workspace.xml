@@ -52,8 +52,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="229" column="36" lean-forward="false" selection-start-line="229" selection-start-column="36" selection-end-line="229" selection-end-column="36" />
+            <state relative-caret-position="215">
+              <caret line="461" column="30" lean-forward="true" selection-start-line="461" selection-start-column="30" selection-end-line="461" selection-end-column="30" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
@@ -176,6 +176,7 @@
       <find>Show_Parts</find>
       <find>body_part_</find>
       <find>static</find>
+      <find>parts_slicer</find>
     </findStrings>
     <replaceStrings>
       <replace>question</replace>
@@ -923,8 +924,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="229" column="36" lean-forward="false" selection-start-line="229" selection-start-column="36" selection-end-line="229" selection-end-column="36" />
+        <state relative-caret-position="215">
+          <caret line="461" column="30" lean-forward="true" selection-start-line="461" selection-start-column="30" selection-end-line="461" selection-end-column="30" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
           </folding>

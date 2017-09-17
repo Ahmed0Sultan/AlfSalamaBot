@@ -408,7 +408,7 @@ def payloadProcessing(user_id,message_payload):
             FB.send_symptoms(token, user_id, symptoms_list, 0,body_part)
 
     elif message_payload.__contains__('_More_Symptoms_'):
-        part_id_and_symptom_num = message_payload.split('_More_Symptoms_', '')
+        part_id_and_symptom_num = message_payload.split('_More_Symptoms_')
         part_id = int(part_id_and_symptom_num[0])
         symptom_num = int(part_id_and_symptom_num[1])
         symptoms = Symptom.query.filter_by(part_id=part_id).all()
