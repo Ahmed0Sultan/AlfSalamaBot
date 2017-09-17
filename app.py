@@ -169,19 +169,16 @@ db.create_all()
 
 def parts_slicer(parts):
     parts_num = len(parts)
-    print parts_num
-    print parts
     parts_dict = {}
     num_of_iterates = 0
     if parts_num > 10:
-        print 'Here'
         num_of_iterates = int(math.floor(parts_num / 10))
         if parts_num > 10:
-            print 'Here again'
             for i in range(num_of_iterates):
                 parts_list = []
                 for a in range(10):
                     part = parts[(10*i)+ a]
+                    print 'Image Url heeeeeeeereee ' + str(part.image_url)
                     dict_list = {
                         "title": part.name,
                         "image_url": url_for('static', filename=part.image_url,_external=True),
@@ -198,9 +195,7 @@ def parts_slicer(parts):
     remaining = parts_num - (num_of_iterates*10)
     parts_list = []
     for l in range(remaining):
-        print 'Number is '+ str((10 * num_of_iterates) + l)
         part = parts[(10 * num_of_iterates) + l]
-        print 'Image Url is ' + str(part.image_url)
         dict_list = {
             "title": part.name,
             "image_url": url_for('static', filename=part.image_url, _external=True),
@@ -215,12 +210,59 @@ def parts_slicer(parts):
         parts_list.append(dict_list)
     if num_of_iterates == 0:
         num_of_iterates = -1
-    print 'part_list_' + str(num_of_iterates)
+
     parts_dict['part_list_' + str(num_of_iterates)] = parts_list
     if num_of_iterates == -1:
         num_of_iterates = 0
-    print parts_dict
     return parts_dict , num_of_iterates
+
+
+def symptoms_slicer(symptoms):
+    symptoms_num = len(symptoms)
+    symptoms_dict = {}
+    num_of_iterates = 0
+    if symptoms_num > 4:
+        num_of_iterates = int(math.floor(symptoms_num / 10))
+        if symptoms_num > 4:
+            for i in range(num_of_iterates):
+                symptoms_list = []
+                for a in range(4):
+                    symptom = symptoms[(4*i)+ a]
+                    dict_list = {
+                        "title": symptom.name,
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "اضغط هنا للمزيد",
+                                "payload": "_Q&A_" + str(symptom.id)
+                            }
+                        ]
+                    }
+                    symptoms_list.append(dict_list)
+                symptoms_dict['symptom_list_'+str(i)] = symptoms_list
+    remaining = symptoms_num - (num_of_iterates*4)
+    symptoms_list = []
+    for l in range(remaining):
+        part = symptoms[(4 * num_of_iterates) + l]
+        dict_list = {
+            "title": part.name,
+            "buttons": [
+                {
+                    "type": "postback",
+                    "title": "اضغط هنا للمزيد",
+                    "payload": "_Q&A_" + str(symptom.id)
+                }
+            ]
+        }
+        symptoms_list.append(dict_list)
+    if num_of_iterates == 0:
+        num_of_iterates = -1
+
+    symptoms_dict['symptom_list_' + str(num_of_iterates)] = symptoms_list
+    if num_of_iterates == -1:
+        num_of_iterates = 0
+    return symptoms_dict , num_of_iterates
+
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -357,7 +399,29 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif message_payload.__contains__('Part_Id_'):
-        body_part_num = int(message_payload.replace('Part_Id_', ''))
+        body_part = int(message_payload.replace('Part_Id_', ''))
+        symptoms = Symptom.query.filter_by(part_id=body_part).all()
+        symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
+        symptoms_list = symptoms_dict['symptom_list_0']
+        FB.show_typing(token, user_id, 'typing_on')
+        if num_of_iterates > 0:
+            FB.send_symptoms(token, user_id, symptoms_list, 1,body_part)
+        else:
+            FB.send_symptoms(token, user_id, symptoms_list, 0,body_part)
+
+    elif message_payload.__contains__('_More_Symptoms_'):
+        part_id_and_symptom_num = message_payload.split('_More_Symptoms_', '')
+        part_id = int(part_id_and_symptom_num[0])
+        symptom_num = int(part_id_and_symptom_num[1])
+        symptoms = Symptom.query.filter_by(part_id=part_id).all()
+        symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
+        symptoms_list = symptoms_dict['symptom_list_' + str(symptom_num)]
+        FB.show_typing(token, user_id, 'typing_on')
+        if num_of_iterates < (symptom_num+1):
+            FB.send_more_symptoms(token, user_id, symptoms_list,symptom_num+1, part_id)
+        else:
+            FB.send_more_symptoms(token, user_id, symptoms_list, 0, part_id)
+
 
     elif message_payload.__contains__('_Q&A_'):
         question_id_and_route = message_payload.split('_Q&A_')
@@ -406,22 +470,16 @@ def quickReplyProcessing(user_id,quick_reply_payload):
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_more_body_parts_quick_replies(token, user_id,u"من فضلك اختر العضو الذى تشكو منه",list_part_number+1)
     elif quick_reply_payload.__contains__('body_part_'):
-        body_part = int(quick_reply_payload.replace('body_part_',''))
-        symptoms = Symptom.query.filter_by(part_id=body_part).all()
-        symptoms_list = []
-        for s in symptoms:
-            symptoms_list.append({
-                "title": s.name,
-                "buttons": [
-                    {
-                        "type": "postback",
-                        "title": 'اظهر المزيد',
-                        "payload": '_Q&A_'+str(s.id)
-                    }
-                ]
-            })
-        FB.show_typing(token, user_id, 'typing_on')
-        FB.send_symptoms(token, user_id, symptoms_list)
+        pass
+        # body_part = int(quick_reply_payload.replace('body_part_',''))
+        # symptoms = Symptom.query.filter_by(part_id=body_part).all()
+        # symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
+        # symptoms_list = symptoms_dict['symptom_list_0']
+        # FB.show_typing(token, user_id, 'typing_on')
+        # if num_of_iterates > 0:
+        #     FB.send_symptoms(token, user_id, symptoms_list,1)
+        # else:
+        #     FB.send_symptoms(token, user_id, symptoms_list,0)
 
     elif quick_reply_payload.__contains__('_Q&A_'):
         question_id_and_route = quick_reply_payload.split('_Q&A_')

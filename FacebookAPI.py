@@ -342,23 +342,90 @@ def send_whose_diagnoses(token, user_id, intro):
     if r.status_code != requests.codes.ok:
         print r.text
 
-def send_symptoms(token, user_id,options):
-
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
-          params={"access_token": token},
-          data=json.dumps({
-                "recipient": {"id": user_id},
-                "message":{
-                    "attachment":{
-                        "type":"template",
-                        "payload":{
-                            "template_type":"generic",
-                            "elements": options
+def send_symptoms(token, user_id,options,first_list,part_id):
+    if first_list == 0:
+        r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+              params={"access_token": token},
+              data=json.dumps({
+                    "recipient": {"id": user_id},
+                    "message":{
+                        "attachment":{
+                            "type":"template",
+                            "payload":{
+                                "template_type":"generic",
+                                "elements": options
+                            }
                         }
                     }
-                }
-          }),
-          headers={'Content-type': 'application/json'})
+              }),
+              headers={'Content-type': 'application/json'})
+    else:
+        r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                          params={"access_token": token},
+                          data=json.dumps({
+                              "recipient": {"id": user_id},
+                              "message": {
+                                  "attachment": {
+                                      "type": "template",
+                                      "payload": {
+                                          "template_type": "generic",
+                                          "elements": options,
+                                          "buttons": [
+                                              {
+                                                  "title": "المزيد",
+                                                  "type": "postback",
+                                                  "payload": str(part_id) + "_More_Symptoms_1"
+                                              }
+                                          ]
+                                      }
+                                  }
+                              }
+                          }),
+                          headers={'Content-type': 'application/json'})
+    if r.status_code != requests.codes.ok:
+        print r.text
+
+
+def send_more_symptoms(token, user_id,options,list_num,part_id):
+    if list_num == 0:
+        r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+              params={"access_token": token},
+              data=json.dumps({
+                    "recipient": {"id": user_id},
+                    "message":{
+                        "attachment":{
+                            "type":"template",
+                            "payload":{
+                                "template_type":"generic",
+                                "elements": options
+                            }
+                        }
+                    }
+              }),
+              headers={'Content-type': 'application/json'})
+    else:
+        r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                          params={"access_token": token},
+                          data=json.dumps({
+                              "recipient": {"id": user_id},
+                              "message": {
+                                  "attachment": {
+                                      "type": "template",
+                                      "payload": {
+                                          "template_type": "generic",
+                                          "elements": options,
+                                          "buttons": [
+                                              {
+                                                  "title": "المزيد",
+                                                  "type": "postback",
+                                                  "payload": str(part_id) + "_More_Symptoms_" + str(list_num)
+                                              }
+                                          ]
+                                      }
+                                  }
+                              }
+                          }),
+                          headers={'Content-type': 'application/json'})
     if r.status_code != requests.codes.ok:
         print r.text
 
