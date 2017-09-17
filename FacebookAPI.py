@@ -343,7 +343,7 @@ def send_whose_diagnoses(token, user_id, intro):
         print r.text
 
 def send_symptoms(token, user_id,options,first_list,part_id):
-    if first_list == 0:
+    if first_list == 0 and len(options) > 1:
         r = requests.post("https://graph.facebook.com/v2.6/me/messages",
               params={"access_token": token},
               data=json.dumps({
@@ -360,6 +360,23 @@ def send_symptoms(token, user_id,options,first_list,part_id):
                     }
               }),
               headers={'Content-type': 'application/json'})
+    elif len(options) == 1:
+        r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                          params={"access_token": token},
+                          data=json.dumps({
+                              "recipient": {"id": user_id},
+                              "message": {
+                                  "attachment": {
+                                        "type": "template",
+                                        "payload": {
+                                            "template_type": "generic",
+                                            "elements": options
+                                        }
+                                  }
+                              }
+                          }),
+                          headers={'Content-type': 'application/json'})
+
     else:
         r = requests.post("https://graph.facebook.com/v2.6/me/messages",
                           params={"access_token": token},
@@ -389,7 +406,7 @@ def send_symptoms(token, user_id,options,first_list,part_id):
 
 
 def send_more_symptoms(token, user_id,options,list_num,part_id):
-    if list_num == 0:
+    if list_num == 0 and len(options) > 1:
         r = requests.post("https://graph.facebook.com/v2.6/me/messages",
               params={"access_token": token},
               data=json.dumps({
@@ -406,6 +423,22 @@ def send_more_symptoms(token, user_id,options,list_num,part_id):
                     }
               }),
               headers={'Content-type': 'application/json'})
+    elif len(options) == 1:
+        r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                          params={"access_token": token},
+                          data=json.dumps({
+                              "recipient": {"id": user_id},
+                              "message": {
+                                  "attachment": {
+                                        "type": "template",
+                                        "payload": {
+                                            "template_type": "generic",
+                                            "elements": options
+                                        }
+                                  }
+                              }
+                          }),
+                          headers={'Content-type': 'application/json'})
     else:
         r = requests.post("https://graph.facebook.com/v2.6/me/messages",
                           params={"access_token": token},
