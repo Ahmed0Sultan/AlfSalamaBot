@@ -352,7 +352,7 @@ def send_symptoms(token, user_id,options,first_list,part_id):
                         "attachment":{
                             "type":"template",
                             "payload":{
-                                "template_type":"generic",
+                                "template_type":"list",
                                 "elements": options
                             }
                         }
@@ -368,7 +368,7 @@ def send_symptoms(token, user_id,options,first_list,part_id):
                                   "attachment": {
                                       "type": "template",
                                       "payload": {
-                                          "template_type": "generic",
+                                          "template_type": "list",
                                           "elements": options,
                                           "buttons": [
                                               {
@@ -396,7 +396,7 @@ def send_more_symptoms(token, user_id,options,list_num,part_id):
                         "attachment":{
                             "type":"template",
                             "payload":{
-                                "template_type":"generic",
+                                "template_type":"list",
                                 "elements": options
                             }
                         }
@@ -412,7 +412,7 @@ def send_more_symptoms(token, user_id,options,list_num,part_id):
                                   "attachment": {
                                       "type": "template",
                                       "payload": {
-                                          "template_type": "generic",
+                                          "template_type": "list",
                                           "elements": options,
                                           "buttons": [
                                               {
