@@ -243,9 +243,9 @@ def symptoms_slicer(symptoms):
     remaining = symptoms_num - (num_of_iterates*4)
     symptoms_list = []
     for l in range(remaining):
-        part = symptoms[(4 * num_of_iterates) + l]
+        symptom = symptoms[(4 * num_of_iterates) + l]
         dict_list = {
-            "title": part.name,
+            "title": symptom.name,
             "buttons": [
                 {
                     "type": "postback",
