@@ -255,8 +255,6 @@ def symptoms_slicer(symptoms):
             ]
         }
         symptoms_list.append(dict_list)
-    if num_of_iterates == 0:
-        num_of_iterates = -1
 
     symptoms_dict['symptom_list_' + str(num_of_iterates)] = symptoms_list
     if num_of_iterates == -1:
