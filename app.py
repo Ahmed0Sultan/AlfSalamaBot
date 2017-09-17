@@ -393,6 +393,12 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
         FB.send_complete_data_button(token, user_id, intro,True)
+    elif message_payload == "Help":
+        FB.show_typing(token, user_id, 'typing_on')
+        intro = u"يمكنك الأن استشارة الف سلامة بوت و ادخال الأعراض التى تشعر بها لتعرف حالتك و تطمئن على صحتك فى اسرع وقت"
+        FB.send_message(token, user_id, intro)
+        FB.show_typing(token, user_id, 'typing_on')
+        FB.send_where_to_go_quick_replies(token, user_id, u"من فضلك اختر الى اين تريد الذهاب")
     elif message_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
