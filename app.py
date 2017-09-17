@@ -222,7 +222,7 @@ def symptoms_slicer(symptoms):
     symptoms_dict = {}
     num_of_iterates = 0
     if symptoms_num > 4:
-        num_of_iterates = int(math.floor(symptoms_num / 10))
+        num_of_iterates = int(math.floor(symptoms_num / 4))
         if symptoms_num > 4:
             for i in range(num_of_iterates):
                 symptoms_list = []
