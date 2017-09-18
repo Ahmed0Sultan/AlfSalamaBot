@@ -2,7 +2,7 @@ import os
 
 
 def get_page_access_token():
-    token = 'EAABZCmSBgOJUBAIWVw0cDFIBTryNoIIxKN1HaTy4rxg7lIATKn7zpcjO5wfBFk0TCV2tGZApsYM6eJxgB7DbiJShBrwWi64kiWchKUGis57sPr8OikR46ZCLJdAMAl3UkumrCRPp0cbQaSLvZBmZBLsqHlJRDdJvCrBmJS7pBmQZDZD'
+    token = 'EAABmWGMeZCQwBAEF7XykkZClaHLFmBDOR89DyJhFRG6pxwigZCL2NCS74r1WvooAcpV4dueiJsSUgPr3OyJGzyUb0ZCvDr5RAWjOlb8K0cyVNHjHKUMOgKGZAchkYCR0OxlBWApxMNpZBKkFGlcu5qfJucWsSuGOHofmusUvEPOAZDZD'
     return os.environ.get('PAGE_ACCESS_TOKEN', token)
 
 
