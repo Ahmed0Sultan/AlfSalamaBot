@@ -52,7 +52,7 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1955">
+            <state relative-caret-position="2601">
               <caret line="425" column="21" lean-forward="false" selection-start-line="425" selection-start-column="20" selection-end-line="425" selection-end-column="21" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
@@ -84,8 +84,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="191" />
+            <state relative-caret-position="85">
+              <caret line="5" column="190" lean-forward="false" selection-start-line="5" selection-start-column="190" selection-end-line="5" selection-end-column="190" />
               <folding />
             </state>
           </provider>
@@ -917,7 +917,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1955">
+        <state relative-caret-position="2601">
           <caret line="425" column="21" lean-forward="false" selection-start-line="425" selection-start-column="20" selection-end-line="425" selection-end-column="21" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
@@ -927,8 +927,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="191" />
+        <state relative-caret-position="85">
+          <caret line="5" column="190" lean-forward="false" selection-start-line="5" selection-start-column="190" selection-end-line="5" selection-end-column="190" />
           <folding />
         </state>
       </provider>
