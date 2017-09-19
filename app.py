@@ -37,6 +37,8 @@ login_manager.login_view = 'login'
 
 token = get_page_access_token()
 
+FB.set_get_started_button(token)
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

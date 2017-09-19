@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FacebookAPI.py" afterPath="$PROJECT_DIR$/FacebookAPI.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,21 +40,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FacebookAPI.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FacebookAPI.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FacebookAPI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="517" column="0" lean-forward="true" selection-start-line="517" selection-start-column="0" selection-end-line="517" selection-end-column="0" />
+            <state relative-caret-position="509">
+              <caret line="516" column="4" lean-forward="false" selection-start-line="516" selection-start-column="6" selection-end-line="516" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2601">
-              <caret line="425" column="21" lean-forward="false" selection-start-line="425" selection-start-column="20" selection-end-line="425" selection-end-column="21" />
+            <state relative-caret-position="317">
+              <caret line="39" column="31" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
@@ -198,9 +199,9 @@
         <option value="$PROJECT_DIR$/templates/complete-data.html" />
         <option value="$PROJECT_DIR$/templates/new-symptom.html" />
         <option value="$PROJECT_DIR$/templates/new-body-part.html" />
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/FacebookAPI.py" />
+        <option value="$PROJECT_DIR$/app.py" />
       </list>
     </option>
   </component>
@@ -907,16 +908,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2601">
-          <caret line="425" column="21" lean-forward="false" selection-start-line="425" selection-start-column="20" selection-end-line="425" selection-end-column="21" />
-          <folding>
-            <element signature="e#14#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -927,9 +918,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/FacebookAPI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="517" column="0" lean-forward="true" selection-start-line="517" selection-start-column="0" selection-end-line="517" selection-end-column="0" />
+        <state relative-caret-position="509">
+          <caret line="516" column="4" lean-forward="false" selection-start-line="516" selection-start-column="6" selection-end-line="516" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="39" column="31" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
+          <folding>
+            <element signature="e#14#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

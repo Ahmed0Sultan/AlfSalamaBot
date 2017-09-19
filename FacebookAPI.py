@@ -514,4 +514,4 @@ def set_get_started_button(token):
         print r.text
 
         # set_menu()
-        set_get_started_button()
+    # set_get_started_button()
