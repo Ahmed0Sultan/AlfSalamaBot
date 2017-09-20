@@ -381,7 +381,7 @@ def messaging_events(payload):
             yield sender_id, {'type': 'text', 'data': "I don't understand this", 'message_id': event['message']['mid']}
 
 def payloadProcessing(user_id,message_payload):
-    print 'user_id is '+ str(user_id)
+    print 'user_id is '+ str(message_payload)
     if message_payload == 'Get_Started_Button':
         FBuser = FB.get_user_fb(token, user_id)
         if User.query.filter_by(username=user_id).first() is None:
