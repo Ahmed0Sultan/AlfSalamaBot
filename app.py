@@ -407,7 +407,9 @@ def payloadProcessing(user_id,message_payload):
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif message_payload.__contains__('Part_Id_'):
         body_part = int(message_payload.replace('Part_Id_', ''))
+        print body_part
         symptoms = Symptom.query.filter_by(part_id=body_part).all()
+        print symptoms
         symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
         symptoms_list = symptoms_dict['symptom_list_0']
         FB.show_typing(token, user_id, 'typing_on')
