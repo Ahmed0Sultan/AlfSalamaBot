@@ -483,6 +483,7 @@ def quickReplyProcessing(user_id,quick_reply_payload):
         parts_list = parts_dict['part_list_'+str(list_part_number)]
         # FB.show_typing(token, user_id, 'typing_on')
         # FB.send_message(token,user_id,u"من فضلك اختر العضو الذى تشكو منه")
+        print 'List issssssss '+ str(parts_list)
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_body_parts(token, user_id,parts_list)
         if list_part_number < num_of_iterates:
