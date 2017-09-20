@@ -183,7 +183,7 @@ def parts_slicer(parts):
                     print 'Image Url heeeeeeeereee ' + str(part.image_url)
                     dict_list = {
                         "title": part.name,
-                        "image_url": url_for('static', filename=part.image_url,_external=True),
+                        # "image_url": url_for('static', filename=part.image_url,_external=True),
                         "buttons": [
                             {
                                 "type": "postback",
@@ -200,7 +200,7 @@ def parts_slicer(parts):
         part = parts[(10 * num_of_iterates) + l]
         dict_list = {
             "title": part.name,
-            "image_url": url_for('static', filename=part.image_url, _external=True),
+            # "image_url": url_for('static', filename=part.image_url, _external=True),
             "buttons": [
                 {
                     "type": "postback",
