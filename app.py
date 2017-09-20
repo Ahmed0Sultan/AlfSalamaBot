@@ -405,6 +405,11 @@ def payloadProcessing(user_id,message_payload):
     elif message_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
+
+        symptoms = Symptom.query.filter_by(part_id=1).all()
+        symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
+        symptoms_list = symptoms_dict['symptom_list_0']
+        print symptoms_list
     elif message_payload.__contains__('Part_Id_'):
         body_part = int(message_payload.replace('Part_Id_', ''))
         print body_part
