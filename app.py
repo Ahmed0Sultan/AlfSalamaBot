@@ -497,6 +497,7 @@ def quickReplyProcessing(user_id,quick_reply_payload):
             FB.send_more_body_parts_quick_replies(token, user_id,u"من فضلك اختر العضو الذى تشكو منه",list_part_number+1)
     elif quick_reply_payload.__contains__('body_part_'):
         pass
+        
         # body_part = int(quick_reply_payload.replace('body_part_',''))
         # symptoms = Symptom.query.filter_by(part_id=body_part).all()
         # symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
