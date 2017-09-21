@@ -180,7 +180,7 @@ def send_intro_screenshots(token, user_id):
         print r.text
 
 def send_body_parts(token, user_id,parts):
-
+    print parts[0]['buttons']
     r = requests.post("https://graph.facebook.com/v2.6/me/messages",
                       params={"access_token": token},
                       data=json.dumps({
