@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FacebookAPI.py" afterPath="$PROJECT_DIR$/FacebookAPI.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-23">
-              <caret line="475" column="50" lean-forward="false" selection-start-line="475" selection-start-column="50" selection-end-line="475" selection-end-column="50" />
+            <state relative-caret-position="249">
+              <caret line="491" column="3" lean-forward="true" selection-start-line="491" selection-start-column="3" selection-end-line="491" selection-end-column="3" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
@@ -85,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="51" lean-forward="false" selection-start-line="5" selection-start-column="51" selection-end-line="5" selection-end-column="51" />
+            <state relative-caret-position="68">
+              <caret line="4" column="192" lean-forward="false" selection-start-line="4" selection-start-column="192" selection-end-line="4" selection-end-column="192" />
               <folding />
             </state>
           </provider>
@@ -183,6 +181,7 @@
       <find>parts_slicer</find>
       <find>الذه</find>
       <find>Part_Id_</find>
+      <find>send_te</find>
     </findStrings>
     <replaceStrings>
       <replace>question</replace>
@@ -203,9 +202,9 @@
         <option value="$PROJECT_DIR$/templates/complete-data.html" />
         <option value="$PROJECT_DIR$/templates/new-symptom.html" />
         <option value="$PROJECT_DIR$/templates/new-body-part.html" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/FacebookAPI.py" />
         <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
@@ -916,14 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="51" lean-forward="false" selection-start-line="5" selection-start-column="51" selection-end-line="5" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FacebookAPI.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3400">
@@ -936,11 +927,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23">
-          <caret line="475" column="50" lean-forward="false" selection-start-line="475" selection-start-column="50" selection-end-line="475" selection-end-column="50" />
+        <state relative-caret-position="249">
+          <caret line="491" column="3" lean-forward="true" selection-start-line="491" selection-start-column="3" selection-end-line="491" selection-end-column="3" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="192" lean-forward="false" selection-start-line="4" selection-start-column="192" selection-end-line="4" selection-end-column="192" />
+          <folding />
         </state>
       </provider>
     </entry>
