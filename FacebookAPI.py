@@ -198,6 +198,42 @@ def send_body_parts(token, user_id,parts):
                       headers={'Content-type': 'application/json'})
     if r.status_code != requests.codes.ok:
         print r.text
+def send_test_generic(token, user_id):
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=json.dumps({
+                          "recipient": {"id": user_id},
+                          "message":{
+                            "attachment":{
+                              "type":"template",
+                              "payload":{
+                                "template_type":"generic",
+                                "elements":[
+                                   {
+                                    "title":"Welcome to Peter\'s Hats",
+                                    "image_url":"https://petersfancybrownhats.com/company_image.png",
+                                    "subtitle":"We\'ve got the right hat for everyone.",
+
+                                    "buttons":[
+                                      {
+                                        "type":"web_url",
+                                        "url":"https://petersfancybrownhats.com",
+                                        "title":"View Website"
+                                      },{
+                                        "type":"postback",
+                                        "title":"Start Chatting",
+                                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                      }),
+                      headers={'Content-type': 'application/json'})
+    if r.status_code != requests.codes.ok:
+        print r.text
 
 def send_body_parts_test(token, user_id,parts):
     # print parts[0]['buttons']
