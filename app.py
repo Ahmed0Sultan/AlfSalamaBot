@@ -167,6 +167,15 @@ db.create_all()
 # print (q.childs)
 # exit(0)
 
+def is_data_complete(token,user_id):
+    user = User.query.filter_by(username=user_id).first()
+    if user.name == None:
+        FB.show_typing(token, user_id, 'typing_on')
+        intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
+        FB.send_complete_data_button(token, user_id, intro, True)
+        return True
+    return False
+
 def parts_slicer(parts):
     parts_num = len(parts)
     parts_dict = {}
@@ -391,9 +400,10 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token,user_id,'typing_on')
         intro = u"يمكنك الأن استشارة الف سلامة بوت و ادخال الأعراض التى تشعر بها لتعرف حالتك و تطمئن على صحتك فى اسرع وقت"
         FB.send_message(token, user_id,intro)
-        FB.show_typing(token, user_id, 'typing_on')
-        intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
-        FB.send_complete_data_button(token, user_id, intro,True)
+        # FB.show_typing(token, user_id, 'typing_on')
+        # intro = u"يبدو انك لم تستكمل بياناتك بعد، من فضلك استكملها لتساعدنا على تقديم افضل خدمة لك"
+        # FB.send_complete_data_button(token, user_id, intro,True)
+        is_data_complete(token, user_id)
     elif message_payload == "Help":
         FB.show_typing(token, user_id, 'typing_on')
         intro = u"يمكنك الأن استشارة الف سلامة بوت و ادخال الأعراض التى تشعر بها لتعرف حالتك و تطمئن على صحتك فى اسرع وقت"
@@ -401,8 +411,9 @@ def payloadProcessing(user_id,message_payload):
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_where_to_go_quick_replies(token, user_id, u"من فضلك اختر الى اين تريد الذهاب")
     elif message_payload == "Choose_Who_To_Diagnose":
-        FB.show_typing(token, user_id, 'typing_on')
-        FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
+        if is_data_complete(token,user_id) == False:
+            FB.show_typing(token, user_id, 'typing_on')
+            FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
     elif message_payload.__contains__('Part_Id_'):
         body_part = int(message_payload.replace('Part_Id_', ''))
         symptoms = Symptom.query.filter_by(part_id=body_part).all()
