@@ -183,16 +183,14 @@ def parts_slicer(parts):
                     print 'Image Url heeeeeeeereee ' + str(part.image_url)
                     dict_list = {
                         "title": part.name,
-                        "content_type": "text",
-                        "payload": "Part_Id_" + str(part.id)
                         # "image_url": url_for('static', filename=part.image_url,_external=True),
-                        # "buttons": [
-                        #     {
-                        #         "type": "postback",
-                        #         "title": "اختر هذا الجزء",
-                        #         "payload": "Part_Id_" + str(part.id)
-                        #     }
-                        # ]
+                        "buttons": [
+                            {
+                                "type": "postback",
+                                "title": "اختر هذا الجزء",
+                                "payload": "Part_Id_" + str(part.id)
+                            }
+                        ]
                     }
                     parts_list.append(dict_list)
                 parts_dict['part_list_'+str(i)] = parts_list
@@ -202,21 +200,19 @@ def parts_slicer(parts):
         part = parts[(10 * num_of_iterates) + l]
         dict_list = {
             "title": part.name,
-            "content_type": "text",
-            "payload": "Part_Id_" + str(part.id)
             # "image_url": url_for('static', filename=part.image_url, _external=True),
-            # "buttons": [
-            #     {
-            #         "type": "postback",
-            #         "title": "اختر هذا الجزء",
-            #         "payload": "Part_Id_" + str(part.id)
-            #     }
-            # ]
+            "buttons": [
+                {
+                    "type": "postback",
+                    "title": "اختر هذا الجزء",
+                    "payload": "Part_Id_" + str(part.id)
+                }
+            ]
         }
         parts_list.append(dict_list)
     if num_of_iterates == 0:
         num_of_iterates = -1
-
+    print 'part_list_' + str(num_of_iterates)
     parts_dict['part_list_' + str(num_of_iterates)] = parts_list
     if num_of_iterates == -1:
         num_of_iterates = 0
@@ -495,7 +491,7 @@ def quickReplyProcessing(user_id,quick_reply_payload):
         # FB.send_message(token,user_id,u"من فضلك اختر العضو الذى تشكو منه")
         print 'List issssssss '+ str(parts_list)
         FB.show_typing(token, user_id, 'typing_on')
-        FB.send_body_parts_test(token, user_id,parts_list)
+        FB.send_body_parts(token, user_id,parts_list)
         if list_part_number < num_of_iterates:
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_more_body_parts_quick_replies(token, user_id,u"من فضلك اختر العضو الذى تشكو منه",list_part_number+1)
