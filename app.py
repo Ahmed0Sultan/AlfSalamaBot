@@ -301,6 +301,7 @@ def handle_messages():
     return "ok"
 
 def processIncoming(user_id, message):
+    print message
     if message['type'] == 'text':
         message_text = message['data']
         message_text = message_text.decode('utf-8','ignore')
