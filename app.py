@@ -183,14 +183,16 @@ def parts_slicer(parts):
                     print 'Image Url heeeeeeeereee ' + str(part.image_url)
                     dict_list = {
                         "title": part.name,
+                        "content_type": "text",
+                        "payload": "Part_Id_" + str(part.id)
                         # "image_url": url_for('static', filename=part.image_url,_external=True),
-                        "buttons": [
-                            {
-                                "type": "postback",
-                                "title": "اختر هذا الجزء",
-                                "payload": "Part_Id_" + str(part.id)
-                            }
-                        ]
+                        # "buttons": [
+                        #     {
+                        #         "type": "postback",
+                        #         "title": "اختر هذا الجزء",
+                        #         "payload": "Part_Id_" + str(part.id)
+                        #     }
+                        # ]
                     }
                     parts_list.append(dict_list)
                 parts_dict['part_list_'+str(i)] = parts_list
@@ -200,14 +202,16 @@ def parts_slicer(parts):
         part = parts[(10 * num_of_iterates) + l]
         dict_list = {
             "title": part.name,
+            "content_type": "text",
+            "payload": "Part_Id_" + str(part.id)
             # "image_url": url_for('static', filename=part.image_url, _external=True),
-            "buttons": [
-                {
-                    "type": "postback",
-                    "title": "اختر هذا الجزء",
-                    "payload": "Part_Id_" + str(part.id)
-                }
-            ]
+            # "buttons": [
+            #     {
+            #         "type": "postback",
+            #         "title": "اختر هذا الجزء",
+            #         "payload": "Part_Id_" + str(part.id)
+            #     }
+            # ]
         }
         parts_list.append(dict_list)
     if num_of_iterates == 0:

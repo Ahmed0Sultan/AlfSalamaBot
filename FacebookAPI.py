@@ -199,6 +199,21 @@ def send_body_parts(token, user_id,parts):
     if r.status_code != requests.codes.ok:
         print r.text
 
+def send_body_parts_test(token, user_id,parts):
+    print parts[0]['buttons']
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",
+                      params={"access_token": token},
+                      data=json.dumps({
+                            "recipient": {"id": user_id},
+                            "message": {
+                                "text": 'test',
+                                "quick_replies": parts
+                            }
+                      }),
+                      headers={'Content-type': 'application/json'})
+    if r.status_code != requests.codes.ok:
+        print r.text
+
 def send_more_body_parts_quick_replies(token, user_id, intro,list_number):
     quickRepliesOptions = [
         {"content_type": "text",
