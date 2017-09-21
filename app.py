@@ -188,7 +188,8 @@ def parts_slicer(parts):
                             {
                                 "type": "postback",
                                 "title": "اختر هذا الجزء",
-                                "payload": "Part_Id_" + str(part.id)
+                                # "payload": "Part_Id_" + str(part.id)
+                                "payload": "Part_Id_1"
                             }
                         ]
                     }
