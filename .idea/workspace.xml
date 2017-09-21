@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="" />
+    <list default="true" id="9754f883-3641-4683-a24e-af3a3f78ffb8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +52,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="495" column="29" lean-forward="false" selection-start-line="495" selection-start-column="29" selection-end-line="495" selection-end-column="29" />
+            <state relative-caret-position="198">
+              <caret line="495" column="28" lean-forward="false" selection-start-line="495" selection-start-column="11" selection-end-line="495" selection-end-column="28" />
               <folding>
                 <element signature="e#14#39#0" expanded="true" />
               </folding>
@@ -643,7 +645,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="55" y="-8" width="1319" height="784" extended-state="6" />
+    <frame x="55" y="-8" width="1319" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18347895" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -924,8 +926,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="495" column="29" lean-forward="false" selection-start-line="495" selection-start-column="29" selection-end-line="495" selection-end-column="29" />
+        <state relative-caret-position="198">
+          <caret line="495" column="28" lean-forward="false" selection-start-line="495" selection-start-column="11" selection-end-line="495" selection-end-column="28" />
           <folding>
             <element signature="e#14#39#0" expanded="true" />
           </folding>
