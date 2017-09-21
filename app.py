@@ -37,8 +37,6 @@ login_manager.login_view = 'login'
 
 token = get_page_access_token()
 
-# FB.set_get_started_button(token)
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -183,13 +181,12 @@ def parts_slicer(parts):
                     print 'Image Url heeeeeeeereee ' + str(part.image_url)
                     dict_list = {
                         "title": part.name,
-                        # "image_url": url_for('static', filename=part.image_url,_external=True),
+                        "image_url": url_for('static', filename=part.image_url,_external=True),
                         "buttons": [
                             {
                                 "type": "postback",
                                 "title": "اختر هذا الجزء",
-                                # "payload": "Part_Id_" + str(part.id)
-                                "payload": "Part_Id_1"
+                                "payload": "Part_Id_" + str(part.id)
                             }
                         ]
                     }
@@ -201,7 +198,7 @@ def parts_slicer(parts):
         part = parts[(10 * num_of_iterates) + l]
         dict_list = {
             "title": part.name,
-            # "image_url": url_for('static', filename=part.image_url, _external=True),
+            "image_url": url_for('static', filename=part.image_url, _external=True),
             "buttons": [
                 {
                     "type": "postback",
@@ -213,7 +210,7 @@ def parts_slicer(parts):
         parts_list.append(dict_list)
     if num_of_iterates == 0:
         num_of_iterates = -1
-    print 'part_list_' + str(num_of_iterates)
+
     parts_dict['part_list_' + str(num_of_iterates)] = parts_list
     if num_of_iterates == -1:
         num_of_iterates = 0
@@ -302,7 +299,6 @@ def handle_messages():
     return "ok"
 
 def processIncoming(user_id, message):
-    print message
     if message['type'] == 'text':
         message_text = message['data']
         message_text = message_text.decode('utf-8','ignore')
@@ -383,7 +379,7 @@ def messaging_events(payload):
             yield sender_id, {'type': 'text', 'data': "I don't understand this", 'message_id': event['message']['mid']}
 
 def payloadProcessing(user_id,message_payload):
-    print 'user_id is '+ str(message_payload)
+    print 'user_id is '+ str(user_id)
     if message_payload == 'Get_Started_Button':
         FBuser = FB.get_user_fb(token, user_id)
         if User.query.filter_by(username=user_id).first() is None:
@@ -407,16 +403,9 @@ def payloadProcessing(user_id,message_payload):
     elif message_payload == "Choose_Who_To_Diagnose":
         FB.show_typing(token, user_id, 'typing_on')
         FB.send_whose_diagnoses(token, user_id, u"هل هذا التشخيص لك ام لشخص اخر ؟")
-
-        symptoms = Symptom.query.filter_by(part_id=1).all()
-        symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
-        symptoms_list = symptoms_dict['symptom_list_0']
-        print symptoms_list
     elif message_payload.__contains__('Part_Id_'):
         body_part = int(message_payload.replace('Part_Id_', ''))
-        print body_part
         symptoms = Symptom.query.filter_by(part_id=body_part).all()
-        print symptoms
         symptoms_dict, num_of_iterates = symptoms_slicer(symptoms)
         symptoms_list = symptoms_dict['symptom_list_0']
         FB.show_typing(token, user_id, 'typing_on')
@@ -490,10 +479,8 @@ def quickReplyProcessing(user_id,quick_reply_payload):
         parts_list = parts_dict['part_list_'+str(list_part_number)]
         # FB.show_typing(token, user_id, 'typing_on')
         # FB.send_message(token,user_id,u"من فضلك اختر العضو الذى تشكو منه")
-        print 'List issssssss '+ str(parts_list)
         FB.show_typing(token, user_id, 'typing_on')
-        # FB.send_body_parts(token, user_id,parts_list)
-        FB.send_test_generic(token, user_id)
+        FB.send_body_parts(token, user_id,parts_list)
         if list_part_number < num_of_iterates:
             FB.show_typing(token, user_id, 'typing_on')
             FB.send_more_body_parts_quick_replies(token, user_id,u"من فضلك اختر العضو الذى تشكو منه",list_part_number+1)
